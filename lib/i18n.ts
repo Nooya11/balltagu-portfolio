@@ -27,6 +27,13 @@ export const TEXT = {
       next: '다음 이미지',
     },
     faq: { title: '자주 묻는 질문' },
+    blog: {
+      lead: '작업 이야기와 소식',
+      empty: '아직 작성된 글이 없습니다.',
+      back: '← 블로그 목록',
+      more: '블로그 글 더 보기',
+      comicGuide: '네컷만화 신청 안내 보기',
+    },
     contact: {
       title: '의뢰 문의',
       lead: '프로젝트 의뢰나 문의사항이 있으시면 언제든지 연락주세요',
@@ -76,6 +83,13 @@ export const TEXT = {
       next: 'Next image',
     },
     faq: { title: 'Frequently asked questions' },
+    blog: {
+      lead: 'Work notes and news',
+      empty: 'No posts yet.',
+      back: '← Back to blog',
+      more: 'More posts',
+      comicGuide: 'How to order a four-panel comic',
+    },
     contact: {
       title: 'Commission inquiry',
       lead: 'Have a project or a question? Send a message any time.',
@@ -125,6 +139,13 @@ export const TEXT = {
       next: '次の画像',
     },
     faq: { title: 'よくある質問' },
+    blog: {
+      lead: '制作の話とお知らせ',
+      empty: 'まだ記事がありません。',
+      back: '← ブログ一覧',
+      more: 'ブログをもっと見る',
+      comicGuide: '4コマ漫画のご依頼案内を見る',
+    },
     contact: {
       title: 'ご依頼・お問い合わせ',
       lead: 'ご依頼やご質問がありましたら、お気軽にご連絡ください',
@@ -201,9 +222,12 @@ export const filterLabel = (filter: PortfolioFilter, lang: Lang) =>
 export const purposeLabel = (purpose: PurposeOption, lang: Lang) =>
   lang === 'ko' ? purpose : PURPOSE_LABELS[lang][purpose];
 
+// 언어별 주소 앞부분: 한국어는 없음, 영어 `/en`, 일본어 `/ja`
+export const langPrefix = (lang: Lang) => (lang === 'ko' ? '' : `/${lang}`);
+
 // 헤더의 언어 전환 버튼
-export const LANGUAGES: { lang: Lang; label: string; href: string }[] = [
-  { lang: 'ko', label: 'KR', href: '/' },
-  { lang: 'en', label: 'EN', href: '/en' },
-  { lang: 'ja', label: 'JP', href: '/ja' },
+export const LANGUAGES: { lang: Lang; label: string }[] = [
+  { lang: 'ko', label: 'KR' },
+  { lang: 'en', label: 'EN' },
+  { lang: 'ja', label: 'JP' },
 ];

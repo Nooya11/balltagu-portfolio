@@ -4,6 +4,7 @@ import Footer from '@/components/layout/Footer';
 import Hero from '@/components/sections/Hero';
 import Portfolio from '@/components/sections/Portfolio';
 import FAQ from '@/components/sections/FAQ';
+import LatestPosts from '@/components/sections/LatestPosts';
 import Contact from '@/components/sections/Contact';
 
 const description =
@@ -24,6 +25,7 @@ export default function HomeJa() {
         <Hero lang="ja" />
         <Portfolio lang="ja" />
         <FAQ lang="ja" />
+        <LatestPosts lang="ja" />
         <Contact lang="ja" />
       </main>
       <Footer />

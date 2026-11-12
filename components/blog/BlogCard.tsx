@@ -1,13 +1,15 @@
 import Link from 'next/link';
 import { BlogPost } from '@/types';
-import { excerpt, thumbnail } from '@/lib/blog';
+import { excerpt, localize, thumbnail } from '@/lib/blog';
+import { Lang, langPrefix } from '@/lib/i18n';
 
-export default function BlogCard({ post }: { post: BlogPost }) {
+export default function BlogCard({ post, lang = 'ko' }: { post: BlogPost; lang?: Lang }) {
   const image = thumbnail(post);
+  const { title, body } = localize(post, lang);
 
   return (
     <Link
-      href={`/blog/${post.slug}`}
+      href={`${langPrefix(lang)}/blog/${post.slug}`}
       className="card flex flex-col sm:flex-row overflow-hidden group"
     >
       {image && (
@@ -18,10 +20,8 @@ export default function BlogCard({ post }: { post: BlogPost }) {
       )}
       <div className="p-6 space-y-2 min-w-0">
         <p className="text-sm text-text-muted">{post.date}</p>
-        <h3 className="text-xl group-hover:text-primary transition-colors break-keep">
-          {post.title}
-        </h3>
-        <p className="text-text-secondary line-clamp-2 break-keep">{excerpt(post)}</p>
+        <h3 className="text-xl group-hover:text-primary transition-colors break-keep">{title}</h3>
+        <p className="text-text-secondary line-clamp-2 break-keep">{excerpt(body)}</p>
       </div>
     </Link>
   );

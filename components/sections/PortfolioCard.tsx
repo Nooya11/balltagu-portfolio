@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Project } from '@/types';
-import { Lang, TEXT, filterLabel } from '@/lib/i18n';
+import { Lang, TEXT, filterLabel, langPrefix } from '@/lib/i18n';
+import { COMIC_GUIDE_SLUG } from '@/lib/constants';
 
 interface PortfolioCardProps {
   project: Project;
@@ -86,6 +88,17 @@ export default function PortfolioCard({ project, onOpen, lang = 'ko' }: Portfoli
             </span>
           ))}
         </div>
+
+        {/* 네컷만화 작업물은 신청 안내 글로 연결 */}
+        {project.tags.includes('네컷만화') && (
+          <Link
+            href={`${langPrefix(lang)}/blog/${COMIC_GUIDE_SLUG}`}
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-dark underline underline-offset-4"
+          >
+            {TEXT[lang].blog.comicGuide} →
+          </Link>
+        )}
       </div>
     </div>
   );

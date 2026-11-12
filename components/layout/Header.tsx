@@ -4,14 +4,15 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { HAS_FAQ } from '@/components/sections/FAQ';
-import { LANGUAGES, Lang, TEXT } from '@/lib/i18n';
+import { LANGUAGES, Lang, TEXT, langPrefix } from '@/lib/i18n';
 
-export default function Header({ lang = 'ko' }: { lang?: Lang }) {
+// path: 언어 주소를 뺀 현재 페이지 경로 (예: '/blog'). 언어를 바꿔도 같은 페이지에 머문다.
+export default function Header({ lang = 'ko', path = '' }: { lang?: Lang; path?: string }) {
   const t = TEXT[lang];
   const NAV_ITEMS = [
     { label: t.nav.home, href: `${t.home}#home` },
     { label: t.nav.portfolio, href: `${t.home}#portfolio` },
-    { label: t.nav.blog, href: '/blog' },
+    { label: t.nav.blog, href: `${langPrefix(lang)}/blog` },
     ...(HAS_FAQ ? [{ label: t.nav.faq, href: `${t.home}#faq` }] : []),
     { label: t.nav.contact, href: `${t.home}#contact` },
   ];
@@ -21,7 +22,7 @@ export default function Header({ lang = 'ko' }: { lang?: Lang }) {
       {LANGUAGES.map((item) => (
         <Link
           key={item.lang}
-          href={item.href}
+          href={`${langPrefix(item.lang)}${path}` || '/'}
           aria-current={item.lang === lang ? 'true' : undefined}
           className={`px-2.5 py-1 rounded-full transition-colors ${
             item.lang === lang

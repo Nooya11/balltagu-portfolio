@@ -1,4 +1,5 @@
 import { BlogPost } from '@/types';
+import { Lang } from '@/lib/i18n';
 
 export type BlogBlock =
   | { type: 'text'; text: string }
@@ -21,9 +22,15 @@ export function parseBody(body: string): BlogBlock[] {
     });
 }
 
+// 선택한 언어의 제목·본문 (번역이 없으면 한국어 원문)
+export function localize(post: BlogPost, lang: Lang): { title: string; body: string } {
+  const translated = lang === 'ko' ? undefined : post[lang];
+  return translated ?? { title: post.title, body: post.body };
+}
+
 // 목록에 보여 줄 글 미리보기 (그림·소제목 제외)
-export function excerpt(post: BlogPost): string {
-  return parseBody(post.body)
+export function excerpt(body: string): string {
+  return parseBody(body)
     .filter((block) => block.type === 'text')
     .map((block) => (block as { text: string }).text)
     .join(' ');

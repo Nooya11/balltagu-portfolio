@@ -49,3 +49,6 @@ export const PROJECTS = portfolioData as Project[];
 export const BLOG_POSTS = (blogData as BlogPost[])
   .slice()
   .sort((a, b) => b.date.localeCompare(a.date));
+
+// 네컷만화 작업물 카드에서 연결되는 신청 안내 글
+export const COMIC_GUIDE_SLUG = 'four-panel-comic-guide';
