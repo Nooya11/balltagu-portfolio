@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
-import { PROJECTS, PORTFOLIO_CATEGORIES } from '@/lib/constants';
-import { ProjectCategory } from '@/types';
+import { PROJECTS, PORTFOLIO_FILTERS } from '@/lib/constants';
+import { PortfolioFilter } from '@/types';
 import PortfolioCard from './PortfolioCard';
 
 export default function Portfolio() {
-  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('전체');
+  const [selectedCategory, setSelectedCategory] = useState<PortfolioFilter>('전체');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<{ src: string }[]>([]);
@@ -17,17 +17,13 @@ export default function Portfolio() {
   const filteredProjects =
     selectedCategory === '전체'
       ? PROJECTS
-      : PROJECTS.filter((project) => project.category === selectedCategory);
+      : PROJECTS.filter((project) => project.tags.includes(selectedCategory));
 
-  // Handle project click - open lightbox
-  const handleProjectClick = (projectId: string) => {
-    const project = PROJECTS.find((p) => p.id === projectId);
-    if (project) {
-      const images = project.images.map((img) => ({ src: img }));
-      setLightboxImages(images);
-      setLightboxIndex(0);
-      setLightboxOpen(true);
-    }
+  // 카드에서 보고 있던 장부터 크게 보기
+  const handleProjectOpen = (images: string[], imageIndex: number) => {
+    setLightboxImages(images.map((img) => ({ src: img })));
+    setLightboxIndex(imageIndex);
+    setLightboxOpen(true);
   };
 
   return (
@@ -43,7 +39,7 @@ export default function Portfolio() {
 
         {/* Category Filters */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {PORTFOLIO_CATEGORIES.map((category) => (
+          {PORTFOLIO_FILTERS.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
@@ -64,7 +60,7 @@ export default function Portfolio() {
             <PortfolioCard
               key={project.id}
               project={project}
-              onClick={() => handleProjectClick(project.id)}
+              onOpen={(imageIndex) => handleProjectOpen(project.images, imageIndex)}
             />
           ))}
         </div>

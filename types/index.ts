@@ -1,23 +1,26 @@
-export type ProjectCategory =
+// 포트폴리오 해시태그 (필터 버튼)
+export type PortfolioTag =
   | '네컷만화'
   | '버추얼'
-  | '동물'
   | '스티커출력물'
-  | '커스텀의뢰'
-  | '이모티콘'
-  | '전체';
+  | '볼따구캐릭터'
+  | '이모티콘';
+
+export type PortfolioFilter = PortfolioTag | '전체';
 
 export interface Project {
   id: string;
   title: string;
-  description: string;
-  category: Exclude<ProjectCategory, '전체'>;
-  images: string[]; // 이미지 경로 배열
-  thumbnail: string; // 썸네일 이미지
-  tags?: string[];
-  date?: string;
-  tools?: string[]; // 사용 도구 (Procreate, Photoshop 등)
-  workTime?: string; // 작업 시간
+  tags: PortfolioTag[]; // 해시태그 (여러 개 가능)
+  images: string[]; // 이미지 경로 배열 (첫 장이 대표 이미지)
+}
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  date: string; // YYYY-MM-DD
+  body: string; // 본문 (빈 줄로 문단 구분)
+  images: string[];
 }
 
 export interface ContactFormData {

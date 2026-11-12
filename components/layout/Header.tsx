@@ -29,7 +29,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link
-            href="#home"
+            href="/#home"
             className="text-2xl font-bold text-primary hover:text-primary-dark transition-colors"
           >
             볼따구는 귀여워
