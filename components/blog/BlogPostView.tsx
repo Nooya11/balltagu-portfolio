@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import RelatedWorks from '@/components/blog/RelatedWorks';
 import { BlogPost } from '@/types';
 import { localize, parseBody } from '@/lib/blog';
 import { Lang, TEXT, langPrefix } from '@/lib/i18n';
@@ -68,6 +69,8 @@ export default function BlogPostView({ post, lang }: { post: BlogPost; lang: Lan
               ))}
             </div>
           )}
+
+          {post.portfolioTag && <RelatedWorks tag={post.portfolioTag} lang={lang} />}
 
           <div className="mt-12 text-center">
             <Link href={`${TEXT[lang].home}#contact`} className="btn-primary">

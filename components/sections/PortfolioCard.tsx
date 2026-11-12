@@ -11,10 +11,16 @@ import { COMIC_GUIDE_SLUG } from '@/lib/constants';
 interface PortfolioCardProps {
   project: Project;
   lang?: Lang;
+  showGuideLink?: boolean; // 네컷만화 신청 안내 링크 표시 여부
   onOpen: (imageIndex: number) => void;
 }
 
-export default function PortfolioCard({ project, onOpen, lang = 'ko' }: PortfolioCardProps) {
+export default function PortfolioCard({
+  project,
+  onOpen,
+  lang = 'ko',
+  showGuideLink = true,
+}: PortfolioCardProps) {
   const t = TEXT[lang].portfolio;
   const title =
     (lang === 'en' ? project.titleEn : lang === 'ja' ? project.titleJa : undefined) ?? project.title;
@@ -90,7 +96,7 @@ export default function PortfolioCard({ project, onOpen, lang = 'ko' }: Portfoli
         </div>
 
         {/* 네컷만화 작업물은 신청 안내 글로 연결 */}
-        {project.tags.includes('네컷만화') && (
+        {showGuideLink && project.tags.includes('네컷만화') && (
           <Link
             href={`${langPrefix(lang)}/blog/${COMIC_GUIDE_SLUG}`}
             onClick={(e) => e.stopPropagation()}

@@ -24,6 +24,7 @@ export interface BlogPost {
   body: string; // 본문 (형식은 lib/blog.ts 참고)
   images: string[]; // 글 끝에 붙는 이미지
   thumbnail?: string; // 목록용 대표 이미지
+  portfolioTag?: PortfolioTag; // 글 아래에 이 해시태그의 포폴 작업물을 보여 준다
   en?: { title: string; body: string }; // 영어 번역
   ja?: { title: string; body: string }; // 일본어 번역
 }

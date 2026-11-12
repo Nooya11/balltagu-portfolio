@@ -33,6 +33,7 @@ export const TEXT = {
       back: '← 블로그 목록',
       more: '블로그 글 더 보기',
       comicGuide: '네컷만화 신청 안내 보기',
+      works: '작업물 보기',
     },
     contact: {
       title: '의뢰 문의',
@@ -89,6 +90,7 @@ export const TEXT = {
       back: '← Back to blog',
       more: 'More posts',
       comicGuide: 'How to order a four-panel comic',
+      works: 'Past work',
     },
     contact: {
       title: 'Commission inquiry',
@@ -145,6 +147,7 @@ export const TEXT = {
       back: '← ブログ一覧',
       more: 'ブログをもっと見る',
       comicGuide: '4コマ漫画のご依頼案内を見る',
+      works: '制作した作品',
     },
     contact: {
       title: 'ご依頼・お問い合わせ',
