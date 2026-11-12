@@ -1,23 +1,15 @@
 import { z } from 'zod';
+import { Lang, TEXT } from '@/lib/i18n';
 
-export const contactFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: '이름은 최소 2자 이상이어야 합니다.' })
-    .max(50, { message: '이름은 50자를 초과할 수 없습니다.' }),
+// 언어별 오류 문구로 폼 검증 스키마를 만든다
+export const createContactFormSchema = (lang: Lang) => {
+  const e = TEXT[lang].errors;
+  return z.object({
+    name: z.string().min(2, { message: e.nameMin }).max(50, { message: e.nameMax }),
+    email: z.string().email({ message: e.email }),
+    purpose: z.string().min(1, { message: e.purpose }),
+    message: z.string().min(10, { message: e.messageMin }).max(1000, { message: e.messageMax }),
+  });
+};
 
-  email: z
-    .string()
-    .email({ message: '올바른 이메일 주소를 입력해주세요.' }),
-
-  purpose: z
-    .string()
-    .min(1, { message: '사용목적을 선택해주세요.' }),
-
-  message: z
-    .string()
-    .min(10, { message: '메시지는 최소 10자 이상이어야 합니다.' })
-    .max(1000, { message: '메시지는 1000자를 초과할 수 없습니다.' }),
-});
-
-export type ContactFormData = z.infer<typeof contactFormSchema>;
+export type ContactFormData = z.infer<ReturnType<typeof createContactFormSchema>>;

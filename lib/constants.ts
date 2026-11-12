@@ -1,14 +1,6 @@
-import { BlogPost, NavItem, PortfolioFilter, Project, PurposeOption, SocialLink } from '@/types';
+import { BlogPost, PortfolioFilter, Project, PurposeOption, SocialLink } from '@/types';
 import portfolioData from '@/content/portfolio.json';
 import blogData from '@/content/blog.json';
-
-// 네비게이션 메뉴
-export const NAV_ITEMS: NavItem[] = [
-  { label: 'Home', href: '/#home' },
-  { label: 'Portfolio', href: '/#portfolio' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '/#contact' },
-];
 
 // 소셜 링크
 export const SOCIAL_LINKS: SocialLink[] = [

@@ -3,9 +3,31 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
-import { NAV_ITEMS } from '@/lib/constants';
+import { HAS_FAQ } from '@/components/sections/FAQ';
+import { Lang, TEXT } from '@/lib/i18n';
 
-export default function Header() {
+export default function Header({ lang = 'ko' }: { lang?: Lang }) {
+  const t = TEXT[lang];
+  const NAV_ITEMS = [
+    { label: t.nav.home, href: `${t.home}#home` },
+    { label: t.nav.portfolio, href: `${t.home}#portfolio` },
+    { label: t.nav.blog, href: '/blog' },
+    ...(HAS_FAQ ? [{ label: t.nav.faq, href: `${t.home}#faq` }] : []),
+    { label: t.nav.contact, href: `${t.home}#contact` },
+  ];
+  // 언어 전환 (KR / EN)
+  const languageToggle = (
+    <span className="flex items-center gap-1 text-sm font-medium">
+      <Link href="/" className={lang === 'ko' ? 'text-primary' : 'text-text-muted hover:text-primary'}>
+        KR
+      </Link>
+      <span className="text-text-muted">/</span>
+      <Link href="/en" className={lang === 'en' ? 'text-primary' : 'text-text-muted hover:text-primary'}>
+        EN
+      </Link>
+    </span>
+  );
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -29,7 +51,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link
-            href="/#home"
+            href={`${t.home}#home`}
             className="font-display text-2xl text-primary hover:text-primary-dark transition-colors"
           >
             볼따구는 귀여워
@@ -47,6 +69,7 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+            <li>{languageToggle}</li>
           </ul>
 
           {/* Mobile Menu Button */}
@@ -77,6 +100,7 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+            <li className="px-4 py-2">{languageToggle}</li>
           </ul>
         )}
       </nav>

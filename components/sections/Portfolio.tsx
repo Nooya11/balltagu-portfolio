@@ -5,9 +5,11 @@ import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { PROJECTS, PORTFOLIO_FILTERS } from '@/lib/constants';
 import { PortfolioFilter } from '@/types';
+import { Lang, TEXT, filterLabel } from '@/lib/i18n';
 import PortfolioCard from './PortfolioCard';
 
-export default function Portfolio() {
+export default function Portfolio({ lang = 'ko' }: { lang?: Lang }) {
+  const t = TEXT[lang].portfolio;
   const [selectedCategory, setSelectedCategory] = useState<PortfolioFilter>('전체');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -33,7 +35,7 @@ export default function Portfolio() {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Portfolio</h2>
           <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-            다양한 스타일의 작업물을 확인하세요
+            {t.lead}
           </p>
         </div>
 
@@ -49,7 +51,7 @@ export default function Portfolio() {
                   : 'bg-white text-text-secondary hover:bg-primary/10 hover:text-primary'
               }`}
             >
-              {category}
+              {filterLabel(category, lang)}
             </button>
           ))}
         </div>
@@ -60,6 +62,7 @@ export default function Portfolio() {
             <PortfolioCard
               key={project.id}
               project={project}
+              lang={lang}
               onOpen={(imageIndex) => handleProjectOpen(project.images, imageIndex)}
             />
           ))}
@@ -69,7 +72,7 @@ export default function Portfolio() {
         {filteredProjects.length === 0 && (
           <div className="text-center py-12">
             <p className="text-text-muted">
-              해당 카테고리에 작품이 없습니다.
+              {t.empty}
             </p>
           </div>
         )}

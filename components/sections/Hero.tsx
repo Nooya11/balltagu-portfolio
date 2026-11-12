@@ -1,5 +1,6 @@
 import { Mail } from 'lucide-react';
 import { SOCIAL_LINKS } from '@/lib/constants';
+import { Lang, TEXT } from '@/lib/i18n';
 
 const YoutubeIcon = ({ size = 24 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -13,15 +14,8 @@ const InstagramIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 );
 
-const WORK_TYPES = [
-  'SD/치비 캐릭터 디자인',
-  '네컷만화',
-  '이모티콘',
-  '방송/광고용 일러스트',
-  '영상',
-];
-
-export default function Hero() {
+export default function Hero({ lang = 'ko' }: { lang?: Lang }) {
+  const t = TEXT[lang].hero;
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'youtube':
@@ -44,21 +38,15 @@ export default function Hero() {
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Text Content */}
           <div className="space-y-5 md:space-y-6 animate-slide-up text-center md:text-left">
-            <h1 className="text-[1.75rem] leading-snug sm:text-4xl md:text-5xl lg:text-6xl font-bold break-keep">
-              안녕하세요,
+            <h1 className="text-2xl leading-snug sm:text-3xl md:text-4xl lg:text-5xl break-keep">
+              <span className="text-accent-dark">{t.soft}</span>
               <br />
-              <span className="text-primary">볼따구는 귀여워</span>입니다!
+              {t.tagline}
             </h1>
-
-            <p className="text-lg sm:text-xl md:text-2xl font-bold text-text-primary leading-relaxed break-keep">
-              <span className="text-accent-dark">♡말랑포근♡</span>
-              <br />
-              볼수록 귀여운 캐릭터를 그립니다.
-            </p>
 
             {/* 작업 종류 */}
             <ul className="flex flex-wrap gap-2 justify-center md:justify-start">
-              {WORK_TYPES.map((work) => (
+              {t.works.map((work) => (
                 <li
                   key={work}
                   className="px-3 py-1 rounded-full bg-accent-light/40 text-text-primary text-sm md:text-base"
@@ -76,7 +64,7 @@ export default function Hero() {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 md:p-4 bg-accent-light/40 hover:bg-primary hover:text-white text-primary rounded-full transition-all shadow-sm hover:shadow-md"
+                  className="p-3 md:p-4 bg-white hover:bg-primary hover:text-white text-primary rounded-full transition-all shadow-md hover:shadow-lg"
                   aria-label={link.name}
                 >
                   {getIcon(link.icon)}
@@ -87,7 +75,7 @@ export default function Hero() {
             {/* CTA Button */}
             <div className="pt-2 md:pt-4">
               <a href="#contact" className="btn-primary">
-                의뢰하기
+                {t.cta}
               </a>
             </div>
           </div>
@@ -105,7 +93,7 @@ export default function Hero() {
               loop
               muted
               playsInline
-              aria-label="인사하는 볼따구 캐릭터"
+              aria-label={t.videoLabel}
             />
           </div>
         </div>

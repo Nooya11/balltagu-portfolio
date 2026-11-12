@@ -2,6 +2,7 @@
   {
     "id": "comic-1",
     "title": "잠옷 판매용 네컷만화 작업물",
+    "titleEn": "Four-panel comic for a pajama sale",
     "tags": [
       "네컷만화"
     ],
@@ -12,6 +13,7 @@
   {
     "id": "comic-2",
     "title": "버추얼 데뷔 네컷만화 #1",
+    "titleEn": "VTuber debut four-panel comic #1",
     "tags": [
       "네컷만화",
       "버추얼"
@@ -23,6 +25,7 @@
   {
     "id": "comic-3",
     "title": "버추얼 데뷔 네컷만화 #2",
+    "titleEn": "VTuber debut four-panel comic #2",
     "tags": [
       "네컷만화",
       "버추얼"
@@ -34,6 +37,7 @@
   {
     "id": "virtual-1",
     "title": "버추얼 데뷔 네컷만화 #3",
+    "titleEn": "VTuber debut four-panel comic #3",
     "tags": [
       "네컷만화",
       "버추얼"
@@ -48,6 +52,7 @@
   {
     "id": "animal-1",
     "title": "앵무새 동물형 네컷만화 작업물",
+    "titleEn": "Parrot-character four-panel comic",
     "tags": [
       "네컷만화"
     ],
@@ -61,6 +66,7 @@
   {
     "id": "sticker-1",
     "title": "봄의 볼찌 네임 스티커",
+    "titleEn": "Spring Bolzzi name sticker",
     "tags": [
       "스티커출력물"
     ],
@@ -71,6 +77,7 @@
   {
     "id": "sticker-2",
     "title": "해파리 네임 스티커",
+    "titleEn": "Jellyfish name sticker",
     "tags": [
       "스티커출력물"
     ],
@@ -81,6 +88,7 @@
   {
     "id": "sticker-3",
     "title": "깡총 포토카드",
+    "titleEn": "Kkangchong photocard",
     "tags": [
       "스티커출력물"
     ],
@@ -92,6 +100,7 @@
   {
     "id": "custom-1",
     "title": "커스텀 캐릭터 #1",
+    "titleEn": "Custom characters #1",
     "tags": [
       "볼따구캐릭터"
     ],
@@ -105,6 +114,7 @@
   {
     "id": "emoticon-1",
     "title": "볼찌 이모티콘 세트",
+    "titleEn": "Bolzzi emoticon set",
     "tags": [
       "이모티콘"
     ],

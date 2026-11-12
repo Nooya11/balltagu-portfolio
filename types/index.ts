@@ -11,6 +11,7 @@ export type PortfolioFilter = PortfolioTag | '전체';
 export interface Project {
   id: string;
   title: string;
+  titleEn?: string; // 영어 페이지용 제목 (없으면 title)
   tags: PortfolioTag[]; // 해시태그 (여러 개 가능)
   images: string[]; // 이미지 경로 배열 (첫 장이 대표 이미지)
 }

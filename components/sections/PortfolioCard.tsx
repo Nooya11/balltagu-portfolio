@@ -4,13 +4,17 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Project } from '@/types';
+import { Lang, TEXT, filterLabel } from '@/lib/i18n';
 
 interface PortfolioCardProps {
   project: Project;
+  lang?: Lang;
   onOpen: (imageIndex: number) => void;
 }
 
-export default function PortfolioCard({ project, onOpen }: PortfolioCardProps) {
+export default function PortfolioCard({ project, onOpen, lang = 'ko' }: PortfolioCardProps) {
+  const t = TEXT[lang].portfolio;
+  const title = lang === 'en' ? project.titleEn ?? project.title : project.title;
   const [index, setIndex] = useState(0);
   const total = project.images.length;
   const hasPrev = index > 0;
@@ -31,7 +35,7 @@ export default function PortfolioCard({ project, onOpen }: PortfolioCardProps) {
         <Image
           key={project.images[index]}
           src={project.images[index]}
-          alt={`${project.title} ${index + 1}`}
+          alt={`${title} ${index + 1}`}
           fill
           className="object-contain"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -40,7 +44,7 @@ export default function PortfolioCard({ project, onOpen }: PortfolioCardProps) {
         {hasPrev && (
           <button
             type="button"
-            aria-label="이전 이미지"
+            aria-label={t.prev}
             onClick={(e) => move(e, -1)}
             className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 text-text-primary shadow-md hover:bg-white transition-colors"
           >
@@ -50,7 +54,7 @@ export default function PortfolioCard({ project, onOpen }: PortfolioCardProps) {
         {hasNext && (
           <button
             type="button"
-            aria-label="다음 이미지"
+            aria-label={t.next}
             onClick={(e) => move(e, 1)}
             className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 text-text-primary shadow-md hover:bg-white transition-colors"
           >
@@ -68,7 +72,7 @@ export default function PortfolioCard({ project, onOpen }: PortfolioCardProps) {
       {/* Project Info */}
       <div className="p-5 space-y-3">
         <h3 className="text-lg font-bold text-text-primary group-hover:text-primary transition-colors line-clamp-1">
-          {project.title}
+          {title}
         </h3>
 
         <div className="flex flex-wrap gap-2">
@@ -77,7 +81,7 @@ export default function PortfolioCard({ project, onOpen }: PortfolioCardProps) {
               key={tag}
               className="px-2 py-1 bg-secondary text-text-secondary text-xs rounded"
             >
-              #{tag}
+              #{filterLabel(tag, lang)}
             </span>
           ))}
         </div>
