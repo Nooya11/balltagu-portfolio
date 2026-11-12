@@ -42,11 +42,10 @@ export const sendEmail = async (data: EmailData) => {
       serviceId,
       templateId,
       {
-        from_name: data.name,
-        from_email: data.email,
-        purpose: data.purpose,
-        message: data.message,
-        attachments: attachmentsBase64 || '첨부 이미지 없음',
+        name: data.name,
+        email: data.email,
+        title: data.purpose,
+        message: data.message + (attachmentsBase64 ? '\n\n첨부 이미지:\n' + attachmentsBase64 : ''),
       },
       publicKey
     );
