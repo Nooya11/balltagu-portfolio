@@ -13,6 +13,14 @@ const InstagramIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 );
 
+const WORK_TYPES = [
+  'SD/치비 캐릭터 디자인',
+  '네컷만화',
+  '이모티콘',
+  '방송/광고용 일러스트',
+  '영상',
+];
+
 export default function Hero() {
   const getIcon = (iconName: string) => {
     switch (iconName) {
@@ -42,11 +50,21 @@ export default function Hero() {
               <span className="text-primary">볼따구는 귀여워</span>입니다!
             </h1>
 
-            <p className="text-[0.95rem] sm:text-lg md:text-xl text-text-secondary leading-relaxed break-keep">
-              네컷만화, 이모티콘, 커스텀 캐릭터 디자인 전문
-              <br />
-              치지직, 유튜브, 기업 광고용 일러스트를 제작합니다.
+            <p className="text-lg sm:text-xl md:text-2xl font-bold text-text-primary leading-relaxed break-keep">
+              <span className="text-primary">♡말랑포근♡</span> 볼수록 귀여운 캐릭터를 그립니다.
             </p>
+
+            {/* 작업 종류 */}
+            <ul className="flex flex-wrap gap-2 justify-center md:justify-start">
+              {WORK_TYPES.map((work) => (
+                <li
+                  key={work}
+                  className="px-3 py-1 rounded-full bg-secondary text-text-secondary text-sm md:text-base"
+                >
+                  {work}
+                </li>
+              ))}
+            </ul>
 
             {/* Social Links */}
             <div className="flex gap-4 pt-2 md:pt-4 justify-center md:justify-start">
