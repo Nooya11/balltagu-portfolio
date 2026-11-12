@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Jua } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
+// 제목용 둥근 서체 (캐릭터의 말랑한 분위기에 맞춤)
+const jua = Jua({ weight: '400', subsets: ['latin'], variable: '--font-display' });
 
 export const metadata: Metadata = {
   title: '볼따구는 귀여워 - 네컷만화/이모티콘/커스텀 그림 의뢰',
@@ -57,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className={inter.className}>
+    <html lang="ko" className={`${inter.className} ${jua.variable}`}>
       <body>
         {children}
         <Analytics />

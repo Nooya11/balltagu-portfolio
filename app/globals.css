@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-white text-text-primary antialiased;
+    @apply bg-secondary-light text-text-primary antialiased;
   }
 
   h1,
@@ -17,7 +17,10 @@
   h4,
   h5,
   h6 {
-    @apply text-text-primary font-bold;
+    @apply text-text-primary font-display;
+    /* 디스플레이 서체는 한 굵기뿐이라 가짜 굵게를 막는다 */
+    font-weight: 400;
+    font-synthesis: none;
   }
 }
 
@@ -31,19 +34,19 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center px-7 py-3 bg-primary text-white rounded-full font-medium hover:bg-primary-dark transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-secondary text-text-primary rounded-lg font-medium hover:bg-secondary-dark transition-all border border-primary/20;
+    @apply inline-flex items-center justify-center px-6 py-3 bg-secondary text-text-primary rounded-full font-medium hover:bg-secondary-dark transition-all border border-primary/20;
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300;
+    @apply bg-white rounded-3xl shadow-sm border border-secondary-dark/60 hover:shadow-lg transition-shadow duration-300;
   }
 
   .input-field {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all;
+    @apply w-full px-4 py-3 border border-secondary-dark bg-white rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all;
   }
 }
 

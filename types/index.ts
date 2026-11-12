@@ -42,7 +42,9 @@ export interface SocialLink {
 }
 
 export type PurposeOption =
-  | '치지직 방송용'
+  | '치지직'
+  | 'SOOP'
+  | '그 외 방송용'
   | '유튜브'
   | '기업 광고'
   | 'SNS/개인용'

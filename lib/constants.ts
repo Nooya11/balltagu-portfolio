@@ -41,7 +41,9 @@ export const PORTFOLIO_FILTERS: PortfolioFilter[] = [
 
 // 사용목적 옵션
 export const PURPOSE_OPTIONS: PurposeOption[] = [
-  '치지직 방송용',
+  '치지직',
+  'SOOP',
+  '그 외 방송용',
   '유튜브',
   '기업 광고',
   'SNS/개인용',

@@ -9,29 +9,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+// 캐릭터 영상 기준 팔레트: 머리색 브라운, 볼터치 핑크, 옷깃 하늘색
         primary: {
-          DEFAULT: '#B8956A',
-          light: '#C4A57B',
-          dark: '#A67D4B',
+          DEFAULT: '#9C6844',
+          light: '#BF8D69',
+          dark: '#7F5133',
         },
         secondary: {
-          DEFAULT: '#F5F1E8',
-          light: '#FAF8F3',
-          dark: '#E8E2D5',
+          DEFAULT: '#FFF0EE',
+          light: '#FFF8F6',
+          dark: '#FBDCD8',
         },
         accent: {
-          DEFAULT: '#8B7355',
-          light: '#9D8567',
-          dark: '#75604A',
+          DEFAULT: '#F59495',
+          light: '#FBC4C4',
+          dark: '#DE6F72',
         },
+        sky: '#7FA6C4',
         text: {
-          primary: '#4A3F35',
-          secondary: '#6B5D4F',
-          muted: '#9B8E7E',
+          primary: '#4A342B',
+          secondary: '#70594E',
+          muted: '#A69186',
         },
         background: '#ffffff',
       },
       fontFamily: {
+        display: ['var(--font-display)', 'Pretendard', 'system-ui', 'sans-serif'],
         sans: ['Pretendard', 'Nanum Square', 'system-ui', '-apple-system', 'sans-serif'],
       },
       animation: {

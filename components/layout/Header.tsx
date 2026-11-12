@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+        isScrolled || isMobileMenuOpen
           ? 'bg-white/95 backdrop-blur-md shadow-sm'
           : 'bg-transparent'
       }`}
@@ -30,7 +30,7 @@ export default function Header() {
           {/* Logo */}
           <Link
             href="/#home"
-            className="text-2xl font-bold text-primary hover:text-primary-dark transition-colors"
+            className="font-display text-2xl text-primary hover:text-primary-dark transition-colors"
           >
             볼따구는 귀여워
           </Link>

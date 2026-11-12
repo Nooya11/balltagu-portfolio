@@ -51,7 +51,9 @@ export default function Hero() {
             </h1>
 
             <p className="text-lg sm:text-xl md:text-2xl font-bold text-text-primary leading-relaxed break-keep">
-              <span className="text-primary">♡말랑포근♡</span> 볼수록 귀여운 캐릭터를 그립니다.
+              <span className="text-accent-dark">♡말랑포근♡</span>
+              <br />
+              볼수록 귀여운 캐릭터를 그립니다.
             </p>
 
             {/* 작업 종류 */}
@@ -59,7 +61,7 @@ export default function Hero() {
               {WORK_TYPES.map((work) => (
                 <li
                   key={work}
-                  className="px-3 py-1 rounded-full bg-secondary text-text-secondary text-sm md:text-base"
+                  className="px-3 py-1 rounded-full bg-accent-light/40 text-text-primary text-sm md:text-base"
                 >
                   {work}
                 </li>
@@ -74,7 +76,7 @@ export default function Hero() {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 md:p-4 bg-primary/10 hover:bg-primary hover:text-white text-primary rounded-full transition-all shadow-sm hover:shadow-md"
+                  className="p-3 md:p-4 bg-accent-light/40 hover:bg-primary hover:text-white text-primary rounded-full transition-all shadow-sm hover:shadow-md"
                   aria-label={link.name}
                 >
                   {getIcon(link.icon)}
@@ -92,7 +94,7 @@ export default function Hero() {
 
           {/* Character Video (폰에서는 글 위에 먼저 보임) */}
           <div className="relative order-first md:order-last w-full max-w-[220px] sm:max-w-xs md:max-w-md mx-auto animate-fade-in">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/30 to-sky/25 rounded-full blur-3xl"></div>
             <video
               className="relative w-full h-auto mix-blend-multiply"
               src="/hero/balltagu-hello.mp4"
