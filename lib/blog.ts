@@ -4,11 +4,13 @@ import { Lang } from '@/lib/i18n';
 export type BlogBlock =
   | { type: 'text'; text: string }
   | { type: 'heading'; text: string }
+  | { type: 'note'; text: string }
   | { type: 'image'; src: string; alt: string };
 
 const IMAGE_LINE = /^!\[(.*)\]\((.+)\)$/;
 
-// 본문 형식: 빈 줄로 문단을 나누고, `## 제목` 은 소제목, `![설명](경로)` 한 줄은 그림이 된다.
+// 본문 형식: 빈 줄로 문단을 나누고, `## 제목` 은 소제목, `![설명](경로)` 한 줄은 그림,
+// `> 문구` 는 작은 글씨의 참고·출처 문구가 된다.
 export function parseBody(body: string): BlogBlock[] {
   return body
     .split(/\n\s*\n/)
@@ -18,6 +20,7 @@ export function parseBody(body: string): BlogBlock[] {
       const image = chunk.match(IMAGE_LINE);
       if (image) return { type: 'image', alt: image[1], src: image[2] };
       if (chunk.startsWith('## ')) return { type: 'heading', text: chunk.slice(3) };
+      if (chunk.startsWith('> ')) return { type: 'note', text: chunk.slice(2) };
       return { type: 'text', text: chunk };
     });
 }

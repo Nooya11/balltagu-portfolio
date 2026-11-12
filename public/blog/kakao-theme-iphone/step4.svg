@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 600" width="360" height="600" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <rect width="360" height="600" fill="#FFF8F6"/>
+  <rect x="40" y="30" width="280" height="510" rx="36" fill="#ffffff" stroke="#4A342B" stroke-width="3"/>
+  <rect x="140" y="42" width="80" height="16" rx="8" fill="#4A342B"/>
+<rect x="43" y="33" width="274" height="504" rx="33" fill="#FFF0EE"/><circle cx="180" cy="230" r="54" fill="#ffffff" stroke="#4A342B" stroke-width="3"/><circle cx="162" cy="224" r="5" fill="#4A342B"/><circle cx="198" cy="224" r="5" fill="#4A342B"/><circle cx="148" cy="244" r="10" fill="#DE6F72" fill-opacity="0.5"/><circle cx="212" cy="244" r="10" fill="#DE6F72" fill-opacity="0.5"/><rect x="64" y="460" width="232" height="50" rx="12" fill="#ffffff" stroke="#E9DAD5"/><text x="180" y="491" font-size="15" font-weight="700" fill="#4A342B" text-anchor="middle">테마 적용하기</text><circle cx="180" cy="485" r="22" fill="#DE6F72" fill-opacity="0.28" stroke="#DE6F72" stroke-width="3"/>
+  <text x="180" y="574" text-anchor="middle" font-size="12" fill="#A69186">직접 그린 예시 그림 · 실제 화면과 조금 달라요</text>
+</svg>

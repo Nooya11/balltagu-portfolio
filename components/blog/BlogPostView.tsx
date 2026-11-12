@@ -47,6 +47,28 @@ export default function BlogPostView({ post, lang }: { post: BlogPost; lang: Lan
                   />
                 );
               }
+              if (block.type === 'note') {
+                // 작은 글씨의 참고·출처 문구. 주소는 링크로 바꾼다.
+                return (
+                  <p key={i} className="text-xs text-text-muted break-all pt-4">
+                    {block.text.split(/(https?:\/\/\S+)/).map((part, j) =>
+                      part.startsWith('http') ? (
+                        <a
+                          key={j}
+                          href={part}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline hover:text-primary"
+                        >
+                          {part}
+                        </a>
+                      ) : (
+                        part
+                      )
+                    )}
+                  </p>
+                );
+              }
               return (
                 <p key={i} className="text-text-primary leading-8 whitespace-pre-line break-keep">
                   {block.text}

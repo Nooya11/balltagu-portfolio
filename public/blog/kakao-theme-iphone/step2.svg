@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 600" width="360" height="600" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+  <rect width="360" height="600" fill="#FFF8F6"/>
+  <rect x="40" y="30" width="280" height="510" rx="36" fill="#ffffff" stroke="#4A342B" stroke-width="3"/>
+  <rect x="140" y="42" width="80" height="16" rx="8" fill="#4A342B"/>
+<rect x="40" y="30" width="280" height="510" rx="36" fill="#4A342B" fill-opacity="0.3"/><rect x="43" y="270" width="274" height="267" rx="24" fill="#ffffff"/><text x="64" y="304" font-size="14" font-weight="700" fill="#4A342B" text-anchor="start">볼따구테마.ktheme</text><rect x="70" y="330" width="52" height="52" rx="13" fill="#E9DAD5"/><text x="96" y="402" font-size="12" font-weight="400" fill="#4A342B" text-anchor="middle">메시지</text><rect x="154" y="330" width="52" height="52" rx="13" fill="#9C6844"/><text x="180" y="402" font-size="12" font-weight="700" fill="#4A342B" text-anchor="middle">카카오톡</text><rect x="238" y="330" width="52" height="52" rx="13" fill="#E9DAD5"/><text x="264" y="402" font-size="12" font-weight="400" fill="#4A342B" text-anchor="middle">메일</text><circle cx="180" cy="356" r="22" fill="#DE6F72" fill-opacity="0.28" stroke="#DE6F72" stroke-width="3"/>
+  <text x="180" y="574" text-anchor="middle" font-size="12" fill="#A69186">직접 그린 예시 그림 · 실제 화면과 조금 달라요</text>
+</svg>
