@@ -84,7 +84,6 @@ export default function Portfolio() {
           close={() => setLightboxOpen(false)}
           slides={lightboxImages}
           index={lightboxIndex}
-          onIndexChange={setLightboxIndex}
         />
       </div>
     </section>
