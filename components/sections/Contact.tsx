@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Send, Loader2, CheckCircle, X, Upload } from 'lucide-react';
+import { Send, Loader2, CheckCircle } from 'lucide-react';
 import { contactFormSchema } from '@/lib/validations';
 import { sendEmail } from '@/lib/emailjs';
 import { PURPOSE_OPTIONS } from '@/lib/constants';
@@ -14,58 +14,24 @@ export default function Contact() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>(
     'idle'
   );
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [filePreviews, setFilePreviews] = useState<string[]>([]);
-
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    setValue,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
   });
-
-  // Handle file selection
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-
-    if (files.length + selectedFiles.length > 3) {
-      alert('최대 3개까지만 업로드 가능합니다.');
-      return;
-    }
-
-    // Create previews
-    const newPreviews = files.map((file) => URL.createObjectURL(file));
-    setFilePreviews([...filePreviews, ...newPreviews]);
-    setSelectedFiles([...selectedFiles, ...files]);
-    setValue('attachments', [...selectedFiles, ...files]);
-  };
-
-  // Remove file
-  const removeFile = (index: number) => {
-    const newFiles = selectedFiles.filter((_, i) => i !== index);
-    const newPreviews = filePreviews.filter((_, i) => i !== index);
-    setSelectedFiles(newFiles);
-    setFilePreviews(newPreviews);
-    setValue('attachments', newFiles);
-  };
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    const result = await sendEmail({
-      ...data,
-      attachments: selectedFiles,
-    });
+    const result = await sendEmail(data);
 
     if (result.success) {
       setSubmitStatus('success');
       reset();
-      setSelectedFiles([]);
-      setFilePreviews([]);
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } else {
       setSubmitStatus('error');
@@ -149,68 +115,16 @@ export default function Contact() {
               id="message"
               rows={6}
               className="input-field resize-none"
-              placeholder="원하시는 내용을 적어주세요. 작업 완료 희망 날짜나 참고용 이미지가 있다면 첨부해 주세요."
+              placeholder="원하시는 내용을 적어주세요. 작업 완료 희망 날짜가 있다면 함께 적어주세요."
             />
             {errors.message && (
               <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
             )}
           </div>
 
-          {/* Image Attachments */}
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              참고 이미지 첨부 (선택, 최대 3개)
-            </label>
-            <div className="space-y-4">
-              {/* File Input Button */}
-              <label className="btn-secondary cursor-pointer inline-flex">
-                <Upload size={20} className="mr-2" />
-                이미지 선택 ({selectedFiles.length}/3)
-                <input
-                  type="file"
-                  accept="image/jpeg,image/jpg,image/png,image/gif"
-                  multiple
-                  onChange={handleFileChange}
-                  className="hidden"
-                  disabled={selectedFiles.length >= 3}
-                />
-              </label>
-
-              {/* File Previews */}
-              {filePreviews.length > 0 && (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {filePreviews.map((preview, index) => (
-                    <div key={index} className="relative group">
-                      <img
-                        src={preview}
-                        alt={`Preview ${index + 1}`}
-                        className="w-full h-32 object-cover rounded-lg"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => removeFile(index)}
-                        className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <X size={16} />
-                      </button>
-                      <p className="text-xs text-text-muted mt-1 truncate">
-                        {selectedFiles[index]?.name}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <p className="text-xs text-text-muted">
-                jpg, png, gif 파일만 가능 (각 파일 최대 5MB)
-              </p>
-            </div>
-            {errors.attachments && (
-              <p className="mt-1 text-sm text-red-600">
-                {errors.attachments.message}
-              </p>
-            )}
-          </div>
+          <p className="text-sm text-text-muted">
+            참고 이미지가 있다면 문의 후 받으시는 회신 메일에 첨부해서 보내주세요.
+          </p>
 
           {/* Submit Button */}
           <button

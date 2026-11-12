@@ -25,7 +25,6 @@ export interface ContactFormData {
   email: string;
   purpose: string; // 사용목적
   message: string;
-  attachments?: File[]; // 선택적 이미지 첨부
 }
 
 export interface NavItem {
