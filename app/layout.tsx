@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: '볼따구는 귀여워 - 네컷만화/이모티콘/커스텀 그림 의뢰',
   description:
-    '치지직, 유튜브, 기업 광고용 일러스트 제작. 네컷만화, 이모티콘, 커스텀 캐릭터 디자인 전문. @balltagu',
+    '♡말랑포근♡ 볼수록 귀여운 캐릭터를 그립니다. SD/치비 캐릭터 디자인, 네컷만화, 이모티콘, 방송/광고용 일러스트, 영상 제작. @balltagu',
   keywords: [
     '네컷만화',
     '이모티콘',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '볼따구는 귀여워 - 네컷만화/이모티콘/커스텀 그림 의뢰',
     description:
-      '치지직, 유튜브, 기업 광고용 일러스트 제작. 네컷만화, 이모티콘, 커스텀 캐릭터 디자인 전문.',
+      '♡말랑포근♡ 볼수록 귀여운 캐릭터를 그립니다. SD/치비 캐릭터 디자인, 네컷만화, 이모티콘, 방송/광고용 일러스트, 영상 제작.',
     siteName: '볼따구는 귀여워 Portfolio',
     images: [
       {
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '볼따구는 귀여워 - 네컷만화/이모티콘/커스텀 그림 의뢰',
     description:
-      '치지직, 유튜브, 기업 광고용 일러스트 제작. 네컷만화, 이모티콘, 커스텀 캐릭터 디자인 전문.',
+      '♡말랑포근♡ 볼수록 귀여운 캐릭터를 그립니다. SD/치비 캐릭터 디자인, 네컷만화, 이모티콘, 방송/광고용 일러스트, 영상 제작.',
     images: ['/hero/지적인 볼따구.png'],
   },
   robots: {
