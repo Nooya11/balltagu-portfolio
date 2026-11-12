@@ -12,6 +12,7 @@ export interface Project {
   id: string;
   title: string;
   titleEn?: string; // 영어 페이지용 제목 (없으면 title)
+  titleJa?: string; // 일본어 페이지용 제목 (없으면 title)
   tags: PortfolioTag[]; // 해시태그 (여러 개 가능)
   images: string[]; // 이미지 경로 배열 (첫 장이 대표 이미지)
 }
@@ -20,8 +21,9 @@ export interface BlogPost {
   slug: string;
   title: string;
   date: string; // YYYY-MM-DD
-  body: string; // 본문 (빈 줄로 문단 구분)
-  images: string[];
+  body: string; // 본문 (형식은 lib/blog.ts 참고)
+  images: string[]; // 글 끝에 붙는 이미지
+  thumbnail?: string; // 목록용 대표 이미지
 }
 
 export interface ContactFormData {

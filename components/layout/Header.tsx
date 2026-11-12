@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { HAS_FAQ } from '@/components/sections/FAQ';
-import { Lang, TEXT } from '@/lib/i18n';
+import { LANGUAGES, Lang, TEXT } from '@/lib/i18n';
 
 export default function Header({ lang = 'ko' }: { lang?: Lang }) {
   const t = TEXT[lang];
@@ -15,17 +15,24 @@ export default function Header({ lang = 'ko' }: { lang?: Lang }) {
     ...(HAS_FAQ ? [{ label: t.nav.faq, href: `${t.home}#faq` }] : []),
     { label: t.nav.contact, href: `${t.home}#contact` },
   ];
-  // 언어 전환 (KR / EN)
+  // 언어 전환 버튼: 메뉴를 열지 않아도 항상 상단에 보인다
   const languageToggle = (
-    <span className="flex items-center gap-1 text-sm font-medium">
-      <Link href="/" className={lang === 'ko' ? 'text-primary' : 'text-text-muted hover:text-primary'}>
-        KR
-      </Link>
-      <span className="text-text-muted">/</span>
-      <Link href="/en" className={lang === 'en' ? 'text-primary' : 'text-text-muted hover:text-primary'}>
-        EN
-      </Link>
-    </span>
+    <div className="flex items-center rounded-full bg-white/80 border border-secondary-dark p-0.5 text-xs font-medium">
+      {LANGUAGES.map((item) => (
+        <Link
+          key={item.lang}
+          href={item.href}
+          aria-current={item.lang === lang ? 'true' : undefined}
+          className={`px-2.5 py-1 rounded-full transition-colors ${
+            item.lang === lang
+              ? 'bg-primary text-white'
+              : 'text-text-secondary hover:text-primary'
+          }`}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </div>
   );
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,13 +59,13 @@ export default function Header({ lang = 'ko' }: { lang?: Lang }) {
           {/* Logo */}
           <Link
             href={`${t.home}#home`}
-            className="font-display text-2xl text-primary hover:text-primary-dark transition-colors"
+            className="font-display text-xl sm:text-2xl text-primary hover:text-primary-dark transition-colors whitespace-nowrap"
           >
             볼따구는 귀여워
           </Link>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-8">
+          <ul className="hidden md:flex items-center gap-8 ml-auto">
             {NAV_ITEMS.map((item) => (
               <li key={item.href}>
                 <Link
@@ -69,21 +76,24 @@ export default function Header({ lang = 'ko' }: { lang?: Lang }) {
                 </Link>
               </li>
             ))}
-            <li>{languageToggle}</li>
           </ul>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 hover:bg-secondary rounded-lg transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? (
-              <X size={24} className="text-text-primary" />
-            ) : (
-              <Menu size={24} className="text-text-primary" />
-            )}
-          </button>
+          <div className="flex items-center gap-2 md:gap-0 md:ml-8">
+            {languageToggle}
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 hover:bg-secondary rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? (
+                <X size={24} className="text-text-primary" />
+              ) : (
+                <Menu size={24} className="text-text-primary" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -100,7 +110,6 @@ export default function Header({ lang = 'ko' }: { lang?: Lang }) {
                 </Link>
               </li>
             ))}
-            <li className="px-4 py-2">{languageToggle}</li>
           </ul>
         )}
       </nav>

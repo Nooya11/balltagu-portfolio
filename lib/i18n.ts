@@ -1,8 +1,8 @@
 import { PortfolioFilter, PurposeOption } from '@/types';
 
-export type Lang = 'ko' | 'en';
+export type Lang = 'ko' | 'en' | 'ja';
 
-// 화면에 보이는 문구 모음. 한국어는 `/`, 영어는 `/en` 에서 쓰인다.
+// 화면에 보이는 문구 모음. 한국어는 `/`, 영어는 `/en`, 일본어는 `/ja` 에서 쓰인다.
 export const TEXT = {
   ko: {
     home: '/',
@@ -102,31 +102,108 @@ export const TEXT = {
       messageMax: 'Message must be 1000 characters or fewer.',
     },
   },
+  ja: {
+    home: '/ja',
+    nav: { home: 'Home', portfolio: 'Portfolio', blog: 'Blog', faq: 'FAQ', contact: 'Contact' },
+    hero: {
+      soft: '♡ふわもち♡',
+      tagline: '見るほどかわいいキャラクターを描きます。',
+      works: [
+        'SD/ちびキャラデザイン',
+        '4コマ漫画',
+        'スタンプ',
+        '配信・広告用イラスト',
+        '動画',
+      ],
+      cta: 'ご依頼はこちら',
+      videoLabel: 'あいさつするボルタグのキャラクター',
+    },
+    portfolio: {
+      lead: 'さまざまなスタイルの作品をご覧ください',
+      empty: 'このカテゴリーにはまだ作品がありません。',
+      prev: '前の画像',
+      next: '次の画像',
+    },
+    faq: { title: 'よくある質問' },
+    contact: {
+      title: 'ご依頼・お問い合わせ',
+      lead: 'ご依頼やご質問がありましたら、お気軽にご連絡ください',
+      name: 'お名前',
+      namePlaceholder: '山田 太郎',
+      email: 'メールアドレス',
+      purpose: '使用目的',
+      choose: '選択してください',
+      message: 'メッセージ',
+      messagePlaceholder:
+        'ご希望の内容をご記入ください。希望納期があればあわせてお書きください。',
+      imageNote: '参考画像がある場合は、お問い合わせ後に届く返信メールに添付してお送りください。',
+      sending: '送信中...',
+      submit: '送信する',
+      success: 'お問い合わせを送信しました。早めにお返事いたします。',
+      error: '送信に失敗しました。もう一度お試しください。',
+    },
+    errors: {
+      nameMin: 'お名前は2文字以上で入力してください。',
+      nameMax: 'お名前は50文字以内で入力してください。',
+      email: '正しいメールアドレスを入力してください。',
+      purpose: '使用目的を選択してください。',
+      messageMin: 'メッセージは10文字以上で入力してください。',
+      messageMax: 'メッセージは1000文字以内で入力してください。',
+    },
+  },
 } as const;
 
-// 필터 버튼·해시태그 영어 표기
-const FILTER_EN: Record<PortfolioFilter, string> = {
-  전체: 'All',
-  네컷만화: 'Four-panel comics',
-  버추얼: 'VTuber',
-  스티커출력물: 'Sticker prints',
-  볼따구캐릭터: 'Balltagu characters',
-  이모티콘: 'Emoticons',
+// 필터 버튼·해시태그의 외국어 표기
+const FILTER_LABELS: Record<Exclude<Lang, 'ko'>, Record<PortfolioFilter, string>> = {
+  en: {
+    전체: 'All',
+    네컷만화: 'Four-panel comics',
+    버추얼: 'VTuber',
+    스티커출력물: 'Sticker prints',
+    볼따구캐릭터: 'Balltagu characters',
+    이모티콘: 'Emoticons',
+  },
+  ja: {
+    전체: 'すべて',
+    네컷만화: '4コマ漫画',
+    버추얼: 'VTuber',
+    스티커출력물: 'ステッカー印刷物',
+    볼따구캐릭터: 'ボルタグキャラ',
+    이모티콘: 'スタンプ',
+  },
 };
 
-// 사용목적 영어 표기 (메일에는 한국어 값이 그대로 전송된다)
-const PURPOSE_EN: Record<PurposeOption, string> = {
-  치지직: 'CHZZK',
-  SOOP: 'SOOP',
-  '그 외 방송용': 'Other streaming',
-  유튜브: 'YouTube',
-  '기업 광고': 'Corporate advertising',
-  'SNS/개인용': 'Social media / personal',
-  기타: 'Other',
+// 사용목적의 외국어 표기 (메일에는 한국어 값이 그대로 전송된다)
+const PURPOSE_LABELS: Record<Exclude<Lang, 'ko'>, Record<PurposeOption, string>> = {
+  en: {
+    치지직: 'CHZZK',
+    SOOP: 'SOOP',
+    '그 외 방송용': 'Other streaming',
+    유튜브: 'YouTube',
+    '기업 광고': 'Corporate advertising',
+    'SNS/개인용': 'Social media / personal',
+    기타: 'Other',
+  },
+  ja: {
+    치지직: 'CHZZK',
+    SOOP: 'SOOP',
+    '그 외 방송용': 'その他の配信',
+    유튜브: 'YouTube',
+    '기업 광고': '企業広告',
+    'SNS/개인용': 'SNS・個人用',
+    기타: 'その他',
+  },
 };
 
 export const filterLabel = (filter: PortfolioFilter, lang: Lang) =>
-  lang === 'en' ? FILTER_EN[filter] : filter;
+  lang === 'ko' ? filter : FILTER_LABELS[lang][filter];
 
 export const purposeLabel = (purpose: PurposeOption, lang: Lang) =>
-  lang === 'en' ? PURPOSE_EN[purpose] : purpose;
+  lang === 'ko' ? purpose : PURPOSE_LABELS[lang][purpose];
+
+// 헤더의 언어 전환 버튼
+export const LANGUAGES: { lang: Lang; label: string; href: string }[] = [
+  { lang: 'ko', label: 'KR', href: '/' },
+  { lang: 'en', label: 'EN', href: '/en' },
+  { lang: 'ja', label: 'JP', href: '/ja' },
+];

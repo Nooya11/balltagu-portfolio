@@ -6,6 +6,8 @@ interface FaqItem {
   a: string;
   qEn?: string;
   aEn?: string;
+  qJa?: string;
+  aJa?: string;
 }
 
 const FAQ_ITEMS = faqData as FaqItem[];
@@ -25,13 +27,13 @@ export default function FAQ({ lang = 'ko' }: { lang?: Lang }) {
           {FAQ_ITEMS.map((item) => (
             <details key={item.q} className="group card px-5 py-4">
               <summary className="flex items-center justify-between gap-4 cursor-pointer list-none font-medium text-text-primary break-keep">
-                {lang === 'en' ? item.qEn ?? item.q : item.q}
+                {(lang === 'en' ? item.qEn : lang === 'ja' ? item.qJa : undefined) ?? item.q}
                 <span className="shrink-0 text-primary text-xl leading-none transition-transform group-open:rotate-45">
                   +
                 </span>
               </summary>
               <p className="mt-3 text-text-secondary leading-relaxed whitespace-pre-line break-keep">
-                {lang === 'en' ? item.aEn ?? item.a : item.a}
+                {(lang === 'en' ? item.aEn : lang === 'ja' ? item.aJa : undefined) ?? item.a}
               </p>
             </details>
           ))}

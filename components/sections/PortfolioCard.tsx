@@ -14,7 +14,8 @@ interface PortfolioCardProps {
 
 export default function PortfolioCard({ project, onOpen, lang = 'ko' }: PortfolioCardProps) {
   const t = TEXT[lang].portfolio;
-  const title = lang === 'en' ? project.titleEn ?? project.title : project.title;
+  const title =
+    (lang === 'en' ? project.titleEn : lang === 'ja' ? project.titleJa : undefined) ?? project.title;
   const [index, setIndex] = useState(0);
   const total = project.images.length;
   const hasPrev = index > 0;

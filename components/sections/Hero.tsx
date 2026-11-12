@@ -82,7 +82,14 @@ export default function Hero({ lang = 'ko' }: { lang?: Lang }) {
 
           {/* Character Video (폰에서는 글 위에 먼저 보임) */}
           <div className="relative order-first md:order-last w-full max-w-[220px] sm:max-w-xs md:max-w-md mx-auto animate-fade-in">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/30 to-sky/25 rounded-full blur-3xl"></div>
+            {/* 영상 뒤는 흰색, 바깥으로 갈수록 페이지 배경색으로 번진다 */}
+            <div
+              className="absolute -inset-[18%]"
+              style={{
+                background:
+                  'radial-gradient(closest-side, #ffffff 0%, #ffffff 62%, rgba(255,255,255,0) 100%)',
+              }}
+            ></div>
             <video
               className="relative w-full h-auto mix-blend-multiply"
               src="/hero/balltagu-hello.mp4"
