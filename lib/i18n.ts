@@ -245,6 +245,7 @@ export const projectTitle = (
 const LINK_LABELS: Record<string, Record<Exclude<Lang, 'ko'>, string>> = {
   'OGQ 마켓에서 구매하기': { en: 'Buy on OGQ Market', ja: 'OGQマーケットで購入' },
   구매하기: { en: 'Buy', ja: '購入する' },
+  '라인 스티커 구매하기': { en: 'Buy LINE stickers', ja: 'LINEスタンプを購入' },
 };
 
 export const linkLabel = (label: string, lang: Lang) =>

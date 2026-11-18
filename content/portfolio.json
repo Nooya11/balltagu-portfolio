@@ -214,20 +214,26 @@
   },
   {
     "id": "emo-couple",
-    "title": "커플 연말 이모티콘",
-    "titleEn": "Couple year-end emoticons",
-    "titleJa": "カップルの年末スタンプ",
+    "title": "[EN/JP/KR] 커플 연말 이모티콘",
+    "titleEn": "[EN/JP/KR] Couple year-end emoticons",
+    "titleJa": "[EN/JP/KR] カップルの年末スタンプ",
     "tags": [
       "이모티콘"
     ],
     "images": [
       "/portfolio/이모티콘/커플-연말/1.png",
+      "/portfolio/이모티콘/커플-연말/3.png",
+      "/portfolio/이모티콘/커플-연말/4.png",
       "/portfolio/이모티콘/커플-연말/2.png"
     ],
     "links": [
       {
         "label": "OGQ 마켓에서 구매하기",
         "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
+      },
+      {
+        "label": "라인 스티커 구매하기",
+        "url": "https://line.me/S/shop/sticker/author/5062500"
       }
     ]
   },
