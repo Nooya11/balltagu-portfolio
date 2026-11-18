@@ -130,9 +130,14 @@
     ],
     "images": [
       "/portfolio/이모티콘/제목1.png",
-      "/portfolio/이모티콘/저장-복사_합체_0000_폴더-24.png",
-      "/portfolio/이모티콘/저장-복사_합체_0001_폴더-23.png",
-      "/portfolio/이모티콘/저장-복사_합체_0002_폴더-22.png"
+      "/portfolio/이모티콘/볼찌/2.png",
+      "/portfolio/이모티콘/볼찌/3.png"
+    ],
+    "links": [
+      {
+        "label": "OGQ 마켓에서 구매하기",
+        "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
+      }
     ]
   },
   {
@@ -148,12 +153,6 @@
       "/portfolio/카톡테마/눈사람-볼따구/2.png",
       "/portfolio/카톡테마/눈사람-볼따구/3.png",
       "/portfolio/카톡테마/눈사람-볼따구/4.png"
-    ],
-    "links": [
-      {
-        "label": "OGQ 마켓에서 구매하기",
-        "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
-      }
     ]
   },
   {
@@ -173,6 +172,139 @@
       "/portfolio/게임/바닥-타일/5.png",
       "/portfolio/게임/바닥-타일/6.png",
       "/portfolio/게임/바닥-타일/7.png"
+    ]
+  },
+  {
+    "id": "emo-gom",
+    "title": "하찮은 곰계인 이모티콘",
+    "titleEn": "Silly bear-alien emoticons",
+    "titleJa": "ゆるいクマ宇宙人スタンプ",
+    "tags": [
+      "이모티콘"
+    ],
+    "images": [
+      "/portfolio/이모티콘/하찮은-곰계인/1.png",
+      "/portfolio/이모티콘/하찮은-곰계인/2.png"
+    ],
+    "links": [
+      {
+        "label": "OGQ 마켓에서 구매하기",
+        "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
+      }
+    ]
+  },
+  {
+    "id": "emo-inkcat",
+    "title": "잉크냥이 이모티콘",
+    "titleEn": "Ink cat emoticons",
+    "titleJa": "インクにゃんこスタンプ",
+    "tags": [
+      "이모티콘"
+    ],
+    "images": [
+      "/portfolio/이모티콘/잉크냥이/1.png",
+      "/portfolio/이모티콘/잉크냥이/2.png"
+    ],
+    "links": [
+      {
+        "label": "OGQ 마켓에서 구매하기",
+        "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
+      }
+    ]
+  },
+  {
+    "id": "emo-couple",
+    "title": "커플 연말 이모티콘",
+    "titleEn": "Couple year-end emoticons",
+    "titleJa": "カップルの年末スタンプ",
+    "tags": [
+      "이모티콘"
+    ],
+    "images": [
+      "/portfolio/이모티콘/커플-연말/1.png",
+      "/portfolio/이모티콘/커플-연말/2.png"
+    ],
+    "links": [
+      {
+        "label": "OGQ 마켓에서 구매하기",
+        "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
+      }
+    ]
+  },
+  {
+    "id": "emo-adult",
+    "title": "하찮은 어른이 이모티콘",
+    "titleEn": "Silly grown-up kid emoticons",
+    "titleJa": "ゆるい大人こどもスタンプ",
+    "tags": [
+      "이모티콘"
+    ],
+    "images": [
+      "/portfolio/이모티콘/하찮은-어른이/1.png",
+      "/portfolio/이모티콘/하찮은-어른이/2.png"
+    ],
+    "links": [
+      {
+        "label": "OGQ 마켓에서 구매하기",
+        "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
+      }
+    ]
+  },
+  {
+    "id": "emo-dragon",
+    "title": "2024 청룡 이모티콘",
+    "titleEn": "2024 Blue Dragon emoticons",
+    "titleJa": "2024 青龍スタンプ",
+    "tags": [
+      "이모티콘"
+    ],
+    "images": [
+      "/portfolio/이모티콘/2024-청룡/1.png",
+      "/portfolio/이모티콘/2024-청룡/2.png"
+    ],
+    "links": [
+      {
+        "label": "OGQ 마켓에서 구매하기",
+        "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
+      }
+    ]
+  },
+  {
+    "id": "emo-cleareye",
+    "title": "맑은 눈 이모티콘",
+    "titleEn": "Clear-eyed emoticons",
+    "titleJa": "澄んだ瞳スタンプ",
+    "tags": [
+      "이모티콘"
+    ],
+    "images": [
+      "/portfolio/이모티콘/맑은-눈/1.png",
+      "/portfolio/이모티콘/맑은-눈/2.png"
+    ],
+    "links": [
+      {
+        "label": "OGQ 마켓에서 구매하기",
+        "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
+      }
+    ]
+  },
+  {
+    "id": "emo-bluebunny",
+    "title": "관종 파란토끼 이모티콘",
+    "titleEn": "Attention-seeking blue bunny emoticons",
+    "titleJa": "かまってちゃん青うさぎスタンプ",
+    "tags": [
+      "이모티콘"
+    ],
+    "images": [
+      "/portfolio/이모티콘/관종-파란토끼/1.png",
+      "/portfolio/이모티콘/관종-파란토끼/2.png"
+    ],
+    "links": [
+      {
+        "label": "OGQ 마켓에서 구매하기",
+        "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
+      }
     ]
   }
 ]
