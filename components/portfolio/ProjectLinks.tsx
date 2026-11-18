@@ -1,3 +1,5 @@
+'use client';
+
 import { ExternalLink } from 'lucide-react';
 import { ProjectLink } from '@/types';
 import { Lang, linkLabel } from '@/lib/i18n';
