@@ -4,7 +4,9 @@ export type PortfolioTag =
   | '버추얼'
   | '스티커출력물'
   | '볼따구캐릭터'
-  | '이모티콘';
+  | '이모티콘'
+  | '게임'
+  | '카톡테마';
 
 export type PortfolioFilter = PortfolioTag | '전체';
 

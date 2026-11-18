@@ -29,6 +29,8 @@ export const PORTFOLIO_FILTERS: PortfolioFilter[] = [
   '스티커출력물',
   '볼따구캐릭터',
   '이모티콘',
+  '게임',
+  '카톡테마',
 ];
 
 // 사용목적 옵션

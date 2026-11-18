@@ -186,6 +186,8 @@ const FILTER_LABELS: Record<Exclude<Lang, 'ko'>, Record<PortfolioFilter, string>
     스티커출력물: 'Sticker prints',
     볼따구캐릭터: 'Balltagu characters',
     이모티콘: 'Emoticons',
+    게임: 'Games',
+    카톡테마: 'KakaoTalk themes',
   },
   ja: {
     전체: 'すべて',
@@ -194,6 +196,8 @@ const FILTER_LABELS: Record<Exclude<Lang, 'ko'>, Record<PortfolioFilter, string>
     스티커출력물: 'ステッカー印刷物',
     볼따구캐릭터: 'ボルタグキャラ',
     이모티콘: 'スタンプ',
+    게임: 'ゲーム',
+    카톡테마: 'カカオトークテーマ',
   },
 };
 
