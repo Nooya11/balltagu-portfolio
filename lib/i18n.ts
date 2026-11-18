@@ -241,6 +241,15 @@ export const projectTitle = (
   lang: Lang
 ) => (lang === 'en' ? project.titleEn : lang === 'ja' ? project.titleJa : undefined) ?? project.title;
 
+// 포폴 바로가기 버튼 문구의 번역 (목록에 없는 문구는 그대로 보인다)
+const LINK_LABELS: Record<string, Record<Exclude<Lang, 'ko'>, string>> = {
+  'OGQ 마켓에서 구매하기': { en: 'Buy on OGQ Market', ja: 'OGQマーケットで購入' },
+  구매하기: { en: 'Buy', ja: '購入する' },
+};
+
+export const linkLabel = (label: string, lang: Lang) =>
+  lang === 'ko' ? label : LINK_LABELS[label]?.[lang] ?? label;
+
 // 헤더의 언어 전환 버튼
 export const LANGUAGES: { lang: Lang; label: string }[] = [
   { lang: 'ko', label: 'KR' },

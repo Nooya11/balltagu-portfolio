@@ -18,6 +18,12 @@ export interface Project {
   tags: PortfolioTag[]; // 해시태그 (여러 개 가능)
   images: string[]; // 이미지 경로 배열 (첫 장이 대표 이미지)
   pixelated?: boolean; // 도트(픽셀) 그림: 확대해도 흐려지지 않게 표시
+  links?: ProjectLink[]; // 구매처 등 바로가기 버튼
+}
+
+export interface ProjectLink {
+  label: string; // 버튼 문구 (예: OGQ 마켓에서 구매하기)
+  url: string;
 }
 
 export interface BlogPost {

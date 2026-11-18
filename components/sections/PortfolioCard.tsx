@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Project } from '@/types';
 import { Lang, TEXT, filterLabel, langPrefix, projectTitle } from '@/lib/i18n';
 import { COMIC_GUIDE_SLUG } from '@/lib/constants';
+import ProjectLinks from '@/components/portfolio/ProjectLinks';
 
 interface PortfolioCardProps {
   project: Project;
@@ -98,6 +99,8 @@ export default function PortfolioCard({
             </span>
           ))}
         </div>
+
+        <ProjectLinks links={project.links} lang={lang} size="sm" />
 
         {/* 네컷만화 작업물은 신청 안내 글로 연결 */}
         {showGuideLink && project.tags.includes('네컷만화') && (

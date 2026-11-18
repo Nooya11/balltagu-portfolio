@@ -3,6 +3,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Project } from '@/types';
 import { Lang, TEXT, filterLabel, projectTitle } from '@/lib/i18n';
+import ProjectLinks from '@/components/portfolio/ProjectLinks';
 
 // 포폴 작업물 상세 화면: 제목, 해시태그, 이미지 전체, 의뢰하기 버튼
 export default function PortfolioDetailView({ project, lang }: { project: Project; lang: Lang }) {
@@ -23,7 +24,7 @@ export default function PortfolioDetailView({ project, lang }: { project: Projec
 
           <h1 className="text-3xl md:text-4xl mt-6 mb-4 break-keep">{title}</h1>
 
-          <div className="flex flex-wrap gap-2 mb-10">
+          <div className="flex flex-wrap gap-2 mb-6">
             {project.tags.map((tag) => (
               <span
                 key={tag}
@@ -33,6 +34,12 @@ export default function PortfolioDetailView({ project, lang }: { project: Projec
               </span>
             ))}
           </div>
+
+          {project.links && project.links.length > 0 && (
+            <div className="mb-10">
+              <ProjectLinks links={project.links} lang={lang} />
+            </div>
+          )}
 
           <div className="space-y-6">
             {project.images.map((src, i) => (
@@ -49,7 +56,8 @@ export default function PortfolioDetailView({ project, lang }: { project: Projec
             ))}
           </div>
 
-          <div className="mt-12 text-center">
+          <div className="mt-12 flex flex-col items-center gap-4">
+            <ProjectLinks links={project.links} lang={lang} />
             <Link href={`${t.home}#contact`} className="btn-primary">
               {t.hero.cta}
             </Link>
