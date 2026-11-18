@@ -1,4 +1,5 @@
-import { BlogPost, PortfolioFilter, Project, PurposeOption, SocialLink } from '@/types';
+import { BlogPost, PortfolioFilter, Project, PurposeOption, SocialLink, TagInfo } from '@/types';
+import tagData from '@/content/tags.json';
 import portfolioData from '@/content/portfolio.json';
 import blogData from '@/content/blog.json';
 
@@ -22,16 +23,8 @@ export const SOCIAL_LINKS: SocialLink[] = [
 ];
 
 // 포트폴리오 필터 버튼 (해시태그)
-export const PORTFOLIO_FILTERS: PortfolioFilter[] = [
-  '전체',
-  '네컷만화',
-  '버추얼',
-  '스티커출력물',
-  '볼따구캐릭터',
-  '이모티콘',
-  '게임',
-  '카톡테마',
-];
+export const TAGS = tagData as TagInfo[];
+export const PORTFOLIO_FILTERS: PortfolioFilter[] = ['전체', ...TAGS.map((tag) => tag.name)];
 
 // 사용목적 옵션
 export const PURPOSE_OPTIONS: PurposeOption[] = [

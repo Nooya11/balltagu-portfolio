@@ -1,4 +1,5 @@
-import { PortfolioFilter, PurposeOption } from '@/types';
+import { PortfolioFilter, PurposeOption, TagInfo } from '@/types';
+import tagData from '@/content/tags.json';
 
 export type Lang = 'ko' | 'en' | 'ja';
 
@@ -180,29 +181,9 @@ export const TEXT = {
   },
 } as const;
 
-// 필터 버튼·해시태그의 외국어 표기
-const FILTER_LABELS: Record<Exclude<Lang, 'ko'>, Record<PortfolioFilter, string>> = {
-  en: {
-    전체: 'All',
-    네컷만화: 'Four-panel comics',
-    버추얼: 'VTuber',
-    스티커출력물: 'Sticker prints',
-    볼따구캐릭터: 'Balltagu characters',
-    이모티콘: 'Emoticons',
-    게임: 'Games',
-    카톡테마: 'KakaoTalk themes',
-  },
-  ja: {
-    전체: 'すべて',
-    네컷만화: '4コマ漫画',
-    버추얼: 'VTuber',
-    스티커출력물: 'ステッカー印刷物',
-    볼따구캐릭터: 'ボルタグキャラ',
-    이모티콘: 'スタンプ',
-    게임: 'ゲーム',
-    카톡테마: 'カカオトークテーマ',
-  },
-};
+// 필터 버튼·해시태그의 외국어 표기 (content/tags.json 에서 읽는다. 번역이 없으면 한국어 그대로)
+const TAG_INFO = new Map((tagData as TagInfo[]).map((tag) => [tag.name, tag]));
+const ALL_LABEL = { en: 'All', ja: 'すべて' };
 
 // 사용목적의 외국어 표기 (메일에는 한국어 값이 그대로 전송된다)
 const PURPOSE_LABELS: Record<Exclude<Lang, 'ko'>, Record<PurposeOption, string>> = {
@@ -226,8 +207,11 @@ const PURPOSE_LABELS: Record<Exclude<Lang, 'ko'>, Record<PurposeOption, string>>
   },
 };
 
-export const filterLabel = (filter: PortfolioFilter, lang: Lang) =>
-  lang === 'ko' ? filter : FILTER_LABELS[lang][filter];
+export const filterLabel = (filter: PortfolioFilter, lang: Lang) => {
+  if (lang === 'ko') return filter;
+  if (filter === '전체') return ALL_LABEL[lang];
+  return TAG_INFO.get(filter)?.[lang] || filter;
+};
 
 export const purposeLabel = (purpose: PurposeOption, lang: Lang) =>
   lang === 'ko' ? purpose : PURPOSE_LABELS[lang][purpose];

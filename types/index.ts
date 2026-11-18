@@ -1,14 +1,13 @@
-// 포트폴리오 해시태그 (필터 버튼)
-export type PortfolioTag =
-  | '네컷만화'
-  | '버추얼'
-  | '스티커출력물'
-  | '볼따구캐릭터'
-  | '이모티콘'
-  | '게임'
-  | '카톡테마';
+// 포트폴리오 해시태그: 목록은 content/tags.json (필터 버튼 순서도 이 파일 순서)
+export type PortfolioTag = string;
 
-export type PortfolioFilter = PortfolioTag | '전체';
+export type PortfolioFilter = PortfolioTag; // '전체' 포함
+
+export interface TagInfo {
+  name: string; // 한국어 이름 (#뒤에 붙는 글자)
+  en: string;
+  ja: string;
+}
 
 export interface Project {
   id: string;
