@@ -1,5 +1,21 @@
 [
   {
+    "id": "vemo-1",
+    "title": "볼따구 버추얼 이모티콘",
+    "titleEn": "Balltagu VTuber emoticons",
+    "titleJa": "ボルタグ VTuberスタンプ",
+    "tags": [
+      "버추얼",
+      "볼따구캐릭터",
+      "이모티콘"
+    ],
+    "images": [
+      "/portfolio/버추얼/볼따구-버추얼-이모티콘/1.gif",
+      "/portfolio/버추얼/볼따구-버추얼-이모티콘/2.mp4",
+      "/portfolio/버추얼/볼따구-버추얼-이모티콘/3.mp4"
+    ]
+  },
+  {
     "id": "comic-1",
     "title": "잠옷 판매용 네컷만화 작업물",
     "titleEn": "Four-panel comic for a pajama sale",
