@@ -43,7 +43,6 @@ export default function PortfolioDetailView({ project, lang }: { project: Projec
                 src={src}
                 alt={`${title} ${i + 1}`}
                 className="w-full h-auto rounded-2xl bg-white border border-secondary-dark scroll-mt-24"
-                loading={i === 0 ? 'eager' : 'lazy'}
               />
             ))}
           </div>
