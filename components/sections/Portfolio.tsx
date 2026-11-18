@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Lightbox from 'yet-another-react-lightbox';
-import 'yet-another-react-lightbox/styles.css';
 import { PROJECTS, PORTFOLIO_FILTERS } from '@/lib/constants';
 import { PortfolioFilter } from '@/types';
 import { Lang, TEXT, filterLabel } from '@/lib/i18n';
@@ -11,22 +9,12 @@ import PortfolioCard from './PortfolioCard';
 export default function Portfolio({ lang = 'ko' }: { lang?: Lang }) {
   const t = TEXT[lang].portfolio;
   const [selectedCategory, setSelectedCategory] = useState<PortfolioFilter>('전체');
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [lightboxImages, setLightboxImages] = useState<{ src: string }[]>([]);
 
   // Filter projects by category
   const filteredProjects =
     selectedCategory === '전체'
       ? PROJECTS
       : PROJECTS.filter((project) => project.tags.includes(selectedCategory));
-
-  // 카드에서 보고 있던 장부터 크게 보기
-  const handleProjectOpen = (images: string[], imageIndex: number) => {
-    setLightboxImages(images.map((img) => ({ src: img })));
-    setLightboxIndex(imageIndex);
-    setLightboxOpen(true);
-  };
 
   return (
     <section id="portfolio" className="section-padding bg-secondary/30">
@@ -63,7 +51,6 @@ export default function Portfolio({ lang = 'ko' }: { lang?: Lang }) {
               key={project.id}
               project={project}
               lang={lang}
-              onOpen={(imageIndex) => handleProjectOpen(project.images, imageIndex)}
             />
           ))}
         </div>
@@ -77,13 +64,6 @@ export default function Portfolio({ lang = 'ko' }: { lang?: Lang }) {
           </div>
         )}
 
-        {/* Lightbox */}
-        <Lightbox
-          open={lightboxOpen}
-          close={() => setLightboxOpen(false)}
-          slides={lightboxImages}
-          index={lightboxIndex}
-        />
       </div>
     </section>
   );

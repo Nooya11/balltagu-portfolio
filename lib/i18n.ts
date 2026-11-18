@@ -25,6 +25,7 @@ export const TEXT = {
       empty: '해당 카테고리에 작품이 없습니다.',
       prev: '이전 이미지',
       next: '다음 이미지',
+      back: '← 포트폴리오로 돌아가기',
     },
     faq: { title: '자주 묻는 질문' },
     blog: {
@@ -82,6 +83,7 @@ export const TEXT = {
       empty: 'No work in this category yet.',
       prev: 'Previous image',
       next: 'Next image',
+      back: '← Back to portfolio',
     },
     faq: { title: 'Frequently asked questions' },
     blog: {
@@ -139,6 +141,7 @@ export const TEXT = {
       empty: 'このカテゴリーにはまだ作品がありません。',
       prev: '前の画像',
       next: '次の画像',
+      back: '← ポートフォリオに戻る',
     },
     faq: { title: 'よくある質問' },
     blog: {
@@ -231,6 +234,12 @@ export const purposeLabel = (purpose: PurposeOption, lang: Lang) =>
 
 // 언어별 주소 앞부분: 한국어는 없음, 영어 `/en`, 일본어 `/ja`
 export const langPrefix = (lang: Lang) => (lang === 'ko' ? '' : `/${lang}`);
+
+// 포폴 작업물의 언어별 제목 (번역이 없으면 한국어 제목)
+export const projectTitle = (
+  project: { title: string; titleEn?: string; titleJa?: string },
+  lang: Lang
+) => (lang === 'en' ? project.titleEn : lang === 'ja' ? project.titleJa : undefined) ?? project.title;
 
 // 헤더의 언어 전환 버튼
 export const LANGUAGES: { lang: Lang; label: string }[] = [

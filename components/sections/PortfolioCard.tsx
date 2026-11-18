@@ -3,27 +3,26 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Project } from '@/types';
-import { Lang, TEXT, filterLabel, langPrefix } from '@/lib/i18n';
+import { Lang, TEXT, filterLabel, langPrefix, projectTitle } from '@/lib/i18n';
 import { COMIC_GUIDE_SLUG } from '@/lib/constants';
 
 interface PortfolioCardProps {
   project: Project;
   lang?: Lang;
   showGuideLink?: boolean; // 네컷만화 신청 안내 링크 표시 여부
-  onOpen: (imageIndex: number) => void;
 }
 
 export default function PortfolioCard({
   project,
-  onOpen,
   lang = 'ko',
   showGuideLink = true,
 }: PortfolioCardProps) {
   const t = TEXT[lang].portfolio;
-  const title =
-    (lang === 'en' ? project.titleEn : lang === 'ja' ? project.titleJa : undefined) ?? project.title;
+  const router = useRouter();
+  const title = projectTitle(project, lang);
   const [index, setIndex] = useState(0);
   const total = project.images.length;
   const hasPrev = index > 0;
@@ -34,10 +33,13 @@ export default function PortfolioCard({
     setIndex((current) => Math.min(Math.max(current + step, 0), total - 1));
   };
 
+  // 상세 화면 주소. 카드에서 보던 장이 있으면 그 이미지 위치로 바로 간다.
+  const detailHref = `${langPrefix(lang)}/portfolio/${project.id}${index > 0 ? `#image-${index + 1}` : ''}`;
+
   return (
     <div
       className="group card overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-300"
-      onClick={() => onOpen(index)}
+      onClick={() => router.push(detailHref)}
     >
       {/* Project Image (전체가 보이도록 object-contain) */}
       <div className="relative h-72 md:h-80 bg-secondary">
@@ -81,7 +83,9 @@ export default function PortfolioCard({
       {/* Project Info */}
       <div className="p-5 space-y-3">
         <h3 className="text-lg font-bold text-text-primary group-hover:text-primary transition-colors line-clamp-1">
-          {title}
+          <Link href={detailHref} onClick={(e) => e.stopPropagation()}>
+            {title}
+          </Link>
         </h3>
 
         <div className="flex flex-wrap gap-2">
