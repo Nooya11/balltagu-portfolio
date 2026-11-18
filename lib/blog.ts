@@ -1,5 +1,6 @@
 import { BlogPost } from '@/types';
 import { Lang } from '@/lib/i18n';
+import { firstStill } from '@/lib/media';
 
 export type BlogBlock =
   | { type: 'text'; text: string }
@@ -42,7 +43,8 @@ export function excerpt(body: string): string {
 // 목록 썸네일: thumbnail > 첨부 이미지 > 본문 첫 그림
 export function thumbnail(post: BlogPost): string | undefined {
   if (post.thumbnail) return post.thumbnail;
-  if (post.images[0]) return post.images[0];
+  const still = firstStill(post.images);
+  if (still) return still;
   const first = parseBody(post.body).find((block) => block.type === 'image');
   return first && first.type === 'image' ? first.src : undefined;
 }

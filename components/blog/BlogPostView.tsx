@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import RelatedWorks from '@/components/blog/RelatedWorks';
+import { isVideo } from '@/lib/media';
 import { BlogPost } from '@/types';
 import { localize, parseBody } from '@/lib/blog';
 import { Lang, TEXT, langPrefix } from '@/lib/i18n';
@@ -79,16 +80,30 @@ export default function BlogPostView({ post, lang }: { post: BlogPost; lang: Lan
 
           {post.images.length > 0 && (
             <div className="mt-8 space-y-6">
-              {post.images.map((src, i) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={src}
-                  src={src}
-                  alt={`${title} ${i + 1}`}
-                  className="w-full h-auto rounded-xl"
-                  loading="lazy"
-                />
-              ))}
+              {post.images.map((src, i) =>
+                isVideo(src) ? (
+                  <video
+                    key={src}
+                    src={src}
+                    className="w-full h-auto rounded-xl"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls
+                    aria-label={`${title} ${i + 1}`}
+                  />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    key={src}
+                    src={src}
+                    alt={`${title} ${i + 1}`}
+                    className="w-full h-auto rounded-xl"
+                    loading="lazy"
+                  />
+                )
+              )}
             </div>
           )}
 

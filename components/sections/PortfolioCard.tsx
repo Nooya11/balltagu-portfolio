@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Project } from '@/types';
 import { Lang, TEXT, filterLabel, langPrefix, projectTitle } from '@/lib/i18n';
 import { COMIC_GUIDE_SLUG } from '@/lib/constants';
+import { isVideo } from '@/lib/media';
 import ProjectLinks from '@/components/portfolio/ProjectLinks';
 
 interface PortfolioCardProps {
@@ -44,14 +45,27 @@ export default function PortfolioCard({
     >
       {/* Project Image (전체가 보이도록 object-contain) */}
       <div className="relative h-72 md:h-80 bg-secondary">
-        <Image
-          key={project.images[index]}
-          src={project.images[index]}
-          alt={`${title} ${index + 1}`}
-          fill
-          className={`object-contain ${project.pixelated ? '[image-rendering:pixelated]' : ''}`}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
+        {isVideo(project.images[index]) ? (
+          <video
+            key={project.images[index]}
+            src={project.images[index]}
+            className="absolute inset-0 w-full h-full object-contain"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-label={`${title} ${index + 1}`}
+          />
+        ) : (
+          <Image
+            key={project.images[index]}
+            src={project.images[index]}
+            alt={`${title} ${index + 1}`}
+            fill
+            className={`object-contain ${project.pixelated ? '[image-rendering:pixelated]' : ''}`}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        )}
 
         {hasPrev && (
           <button

@@ -4,6 +4,7 @@ import Footer from '@/components/layout/Footer';
 import { Project } from '@/types';
 import { Lang, TEXT, filterLabel, projectTitle } from '@/lib/i18n';
 import ProjectLinks from '@/components/portfolio/ProjectLinks';
+import { isVideo } from '@/lib/media';
 
 // 포폴 작업물 상세 화면: 제목, 해시태그, 이미지 전체, 의뢰하기 버튼
 export default function PortfolioDetailView({ project, lang }: { project: Project; lang: Lang }) {
@@ -42,18 +43,29 @@ export default function PortfolioDetailView({ project, lang }: { project: Projec
           )}
 
           <div className="space-y-6">
-            {project.images.map((src, i) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={src}
-                id={`image-${i + 1}`}
-                src={src}
-                alt={`${title} ${i + 1}`}
-                className={`w-full h-auto rounded-2xl bg-white border border-secondary-dark scroll-mt-24 ${
-                  project.pixelated ? '[image-rendering:pixelated]' : ''
-                }`}
-              />
-            ))}
+            {project.images.map((src, i) => {
+              const className = `w-full h-auto rounded-2xl bg-white border border-secondary-dark scroll-mt-24 ${
+                project.pixelated ? '[image-rendering:pixelated]' : ''
+              }`;
+              // 영상은 소리 없이 반복 재생하고, 조작 버튼으로 소리를 켤 수 있다
+              return isVideo(src) ? (
+                <video
+                  key={src}
+                  id={`image-${i + 1}`}
+                  src={src}
+                  className={className}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  controls
+                  aria-label={`${title} ${i + 1}`}
+                />
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img key={src} id={`image-${i + 1}`} src={src} alt={`${title} ${i + 1}`} className={className} />
+              );
+            })}
           </div>
 
           <div className="mt-12 flex flex-col items-center gap-4">

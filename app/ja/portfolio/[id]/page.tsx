@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import PortfolioDetailView from '@/components/portfolio/PortfolioDetailView';
 import { PROJECTS } from '@/lib/constants';
 import { projectTitle } from '@/lib/i18n';
+import { firstStill } from '@/lib/media';
 
 type PageProps = { params: Promise<{ id: string }> };
 
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!project) return { title: 'ボルタグはかわいい' };
   return {
     title: `${projectTitle(project, 'ja')} - ボルタグはかわいい`,
-    openGraph: { images: [project.images[0]] },
+    openGraph: { images: [firstStill(project.images) ?? '/hero/balltagu-hello-poster.jpg'] },
   };
 }
 
