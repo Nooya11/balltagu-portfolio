@@ -134,5 +134,39 @@
       "/portfolio/이모티콘/저장-복사_합체_0001_폴더-23.png",
       "/portfolio/이모티콘/저장-복사_합체_0002_폴더-22.png"
     ]
+  },
+  {
+    "id": "theme-1",
+    "title": "눈사람 볼따구 카톡테마",
+    "titleEn": "Snowman Balltagu KakaoTalk theme",
+    "titleJa": "雪だるまボルタグ カカオトークテーマ",
+    "tags": [
+      "카톡테마"
+    ],
+    "images": [
+      "/portfolio/카톡테마/눈사람-볼따구/1.png",
+      "/portfolio/카톡테마/눈사람-볼따구/2.png",
+      "/portfolio/카톡테마/눈사람-볼따구/3.png",
+      "/portfolio/카톡테마/눈사람-볼따구/4.png"
+    ]
+  },
+  {
+    "id": "game-1",
+    "title": "게임 에셋 바닥 타일 제작",
+    "titleEn": "Game asset: floor tiles",
+    "titleJa": "ゲーム素材 床タイル制作",
+    "tags": [
+      "게임"
+    ],
+    "pixelated": true,
+    "images": [
+      "/portfolio/게임/바닥-타일/1.png",
+      "/portfolio/게임/바닥-타일/2.png",
+      "/portfolio/게임/바닥-타일/3.png",
+      "/portfolio/게임/바닥-타일/4.png",
+      "/portfolio/게임/바닥-타일/5.png",
+      "/portfolio/게임/바닥-타일/6.png",
+      "/portfolio/게임/바닥-타일/7.png"
+    ]
   }
 ]

@@ -42,7 +42,9 @@ export default function PortfolioDetailView({ project, lang }: { project: Projec
                 id={`image-${i + 1}`}
                 src={src}
                 alt={`${title} ${i + 1}`}
-                className="w-full h-auto rounded-2xl bg-white border border-secondary-dark scroll-mt-24"
+                className={`w-full h-auto rounded-2xl bg-white border border-secondary-dark scroll-mt-24 ${
+                  project.pixelated ? '[image-rendering:pixelated]' : ''
+                }`}
               />
             ))}
           </div>

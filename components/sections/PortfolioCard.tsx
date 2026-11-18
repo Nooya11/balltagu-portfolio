@@ -48,7 +48,7 @@ export default function PortfolioCard({
           src={project.images[index]}
           alt={`${title} ${index + 1}`}
           fill
-          className="object-contain"
+          className={`object-contain ${project.pixelated ? '[image-rendering:pixelated]' : ''}`}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
 
