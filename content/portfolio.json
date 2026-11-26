@@ -116,6 +116,9 @@
       "/portfolio/네컷만화_버추얼/3.png",
       "/portfolio/네컷만화_버추얼/4.png"
     ],
+    "period": {
+      "start": "2026-06-14"
+    },
     "purpose": "치지직 이쿠롬님 데뷔 방송용 만화 제작하였습니다.",
     "purposeEn": "Created a comic for Ikurom's debut stream on CHZZK.",
     "purposeJa": "CHZZKで活動するイクロムさんのデビュー配信用漫画を制作しました。"
@@ -311,7 +314,13 @@
         "label": "OGQ 마켓에서 구매하기",
         "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
       }
-    ]
+    ],
+    "period": {
+      "start": "2025-07-08"
+    },
+    "purpose": "캐릭터 디자인 및 이모티콘 작업하였습니다.",
+    "purposeEn": "Designed the character and created an emoticon set.",
+    "purposeJa": "キャラクターデザインとスタンプを制作しました。"
   },
   {
     "id": "emo-inkcat",
@@ -452,7 +461,13 @@
         "label": "OGQ 마켓에서 구매하기",
         "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
       }
-    ]
+    ],
+    "period": {
+      "start": "2023-01-30"
+    },
+    "purpose": "캐릭터 디자인 및 이모티콘 제작하였습니다.",
+    "purposeEn": "Designed the character and created an emoticon set.",
+    "purposeJa": "キャラクターデザインとスタンプを制作しました。"
   },
   {
     "id": "emo-hamster",
@@ -513,7 +528,13 @@
         "label": "라인 스티커 구매하기",
         "url": "https://line.me/S/shop/sticker/author/5062500"
       }
-    ]
+    ],
+    "period": {
+      "start": "2024-03-19"
+    },
+    "purpose": "캐릭터 디자인 및 작은 이모지 제작하였습니다.",
+    "purposeEn": "Designed the character and created a set of small emoji.",
+    "purposeJa": "キャラクターデザインと小さな絵文字を制作しました。"
   },
   {
     "id": "emo-potato",
