@@ -1,5 +1,25 @@
 [
   {
+    "id": "emo-bluebunny-daily",
+    "title": "파란토끼의 일상 이모티콘",
+    "titleEn": "Blue bunny's daily life emoticons",
+    "titleJa": "青うさぎの日常スタンプ",
+    "tags": [
+      "이모티콘"
+    ],
+    "images": [
+      "/portfolio/이모티콘/파란토끼의-일상/1.png",
+      "/portfolio/이모티콘/파란토끼의-일상/2.png"
+    ],
+    "links": [
+      {
+        "label": "OGQ 마켓에서 구매하기",
+        "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
+      }
+    ],
+    "purpose": "SNS/개인용"
+  },
+  {
     "id": "vemo-1",
     "title": "볼따구 버추얼 이모티콘",
     "titleEn": "Balltagu VTuber emoticons",
@@ -187,7 +207,11 @@
       "/portfolio/게임/바닥-타일/5.png",
       "/portfolio/게임/바닥-타일/6.png",
       "/portfolio/게임/바닥-타일/7.png"
-    ]
+    ],
+    "period": {
+      "start": "2026-11-18"
+    },
+    "purpose": "기타"
   },
   {
     "id": "emo-gom",
@@ -225,7 +249,10 @@
         "label": "OGQ 마켓에서 구매하기",
         "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
       }
-    ]
+    ],
+    "period": {
+      "start": "2024-11-10"
+    }
   },
   {
     "id": "emo-couple",
@@ -269,7 +296,11 @@
         "label": "OGQ 마켓에서 구매하기",
         "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
       }
-    ]
+    ],
+    "period": {
+      "start": "2026-06-04"
+    },
+    "purpose": "SNS/개인용"
   },
   {
     "id": "emo-dragon",
@@ -288,7 +319,11 @@
         "label": "OGQ 마켓에서 구매하기",
         "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
       }
-    ]
+    ],
+    "period": {
+      "start": "2024-06-10"
+    },
+    "purpose": "SNS/개인용"
   },
   {
     "id": "emo-cleareye",
@@ -307,7 +342,11 @@
         "label": "OGQ 마켓에서 구매하기",
         "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
       }
-    ]
+    ],
+    "period": {
+      "start": "2024-05-30"
+    },
+    "purpose": "SNS/개인용"
   },
   {
     "id": "emo-bluebunny",
@@ -345,7 +384,11 @@
         "label": "라인 스티커 구매하기",
         "url": "https://line.me/S/shop/sticker/author/5062500"
       }
-    ]
+    ],
+    "period": {
+      "start": "2024-09-17"
+    },
+    "purpose": "SNS/개인용"
   },
   {
     "id": "emo-agajjang",
@@ -402,6 +445,9 @@
         "label": "라인 스티커 구매하기",
         "url": "https://line.me/S/shop/sticker/author/5062500"
       }
-    ]
+    ],
+    "period": {
+      "start": "2024-06-11"
+    }
   }
 ]

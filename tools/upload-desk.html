@@ -131,7 +131,8 @@ textarea { min-height: 180px; resize: vertical; }
   border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 0;
 }
 #panel-edit .period-row input[type="date"] { background: var(--surface); }
-.purpose-chips .chip { font-size: 13px; padding: 3px 10px; }
+textarea.purpose-input { min-height: 64px; }
+#panel-edit textarea.purpose-input { background: var(--surface); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 
@@ -182,7 +183,7 @@ textarea { min-height: 180px; resize: vertical; }
   </section>
 
   <section class="panel" id="panel-edit" hidden>
-    <p class="hint">제목, 작업 기간, 목적, 해시태그, 이미지를 고친 뒤 그 작업물의 "수정 보내기"를 누르세요. 이미지는 끌어서 순서를 바꾸고, ×로 빼고, "이미지 추가"로 더할 수 있어요.</p>
+    <p class="hint">작업 기간을 아직 안 쓴 작업물이 맨 위에, 그 아래는 최근 작업 순으로 나옵니다. 제목, 작업 기간, 목적, 해시태그, 이미지를 고친 뒤 그 작업물의 "수정 보내기"를 누르세요. 이미지는 끌어서 순서를 바꾸고, ×로 빼고, "이미지 추가"로 더할 수 있어요.</p>
     <ul class="list" id="edit-list"></ul>
     <p class="empty" id="edit-empty">포폴 목록을 불러오는 중입니다.</p>
   </section>
@@ -245,7 +246,6 @@ textarea { min-height: 180px; resize: vertical; }
   // 해시태그 목록은 db의 tags 컬렉션에서 받는다 (받기 전에는 이 기본 목록)
   var TAGS = ['네컷만화', '버추얼', '스티커출력물', '볼따구캐릭터', '이모티콘', '게임', '카톡테마'];
   var KIND = { portfolio_add: '포폴 추가', portfolio_edit: '포폴 수정', blog: '블로그 글', tag_add: '해시태그 추가' };
-  var PURPOSES = ['치지직', 'SOOP', '그 외 방송용', '유튜브', '기업 광고', 'SNS/개인용', '기타'];
   var $ = function (id) { return document.getElementById(id); };
   var db = null, assets = null;
   var state = { add: { tags: [], images: [], links: [], meta: { start: '', end: '', purpose: '' }, busy: 0 }, blog: { images: [], busy: 0 } };
@@ -350,17 +350,12 @@ textarea { min-height: 180px; resize: vertical; }
 
     var uf = el('div', { class: 'field' });
     uf.appendChild(el('span', { class: 'label' }, '목적 (선택)'));
-    var input = el('input', { type: 'text', maxlength: '40', placeholder: '예: 치지직 방송용, 버추얼 데뷔', 'aria-label': '목적' });
+    var input = el('textarea', { rows: '2', maxlength: '300', placeholder: '예: 데뷔 방송에서 사용할 PPT를 제작하였습니다.', 'aria-label': '목적' });
+    input.className = 'purpose-input';
     input.value = meta.purpose || '';
     input.addEventListener('input', function () { meta.purpose = input.value; });
     uf.appendChild(input);
-    var chips = el('div', { class: 'chips purpose-chips' });
-    PURPOSES.forEach(function (p) {
-      var b = el('button', { type: 'button', class: 'chip' }, p);
-      b.addEventListener('click', function () { input.value = p; meta.purpose = p; });
-      chips.appendChild(b);
-    });
-    uf.appendChild(chips);
+    uf.appendChild(el('p', { class: 'hint' }, '상세 화면에 문장 그대로 나와요. 영어·일본어 화면에는 Claude가 번역해서 넣습니다.'));
     box.appendChild(uf);
   }
   // 요청에 넣을 기간·목적. 날짜가 거꾸로면 null
@@ -823,11 +818,11 @@ textarea { min-height: 180px; resize: vertical; }
         var v = d.data() || {};
         return { id: d.id, title: v.title || '', tags: v.tags || [], order: v.order || 0, images: v.images || [], links: v.links || [], period: v.period || null, purpose: v.purpose || '' };
       }).sort(function (a, b) {
-        // 사이트와 같이: 작업 기간이 있으면 최근 작업 순, 없으면 그 뒤에 원래 순서
+        // 작업 기간을 아직 안 쓴 작업물이 맨 위(채우기 쉽게), 그 아래는 최근 작업 순
         var da = (a.period && (a.period.end || a.period.start)) || '', dbb = (b.period && (b.period.end || b.period.start)) || '';
-        if (da && dbb) return dbb.localeCompare(da) || a.order - b.order;
-        if (da || dbb) return da ? -1 : 1;
-        return a.order - b.order;
+        if (!da && !dbb) return a.order - b.order;
+        if (!da || !dbb) return da ? 1 : -1;
+        return dbb.localeCompare(da) || a.order - b.order;
       });
       // 사이트에 반영되어 내용이 바뀐 작업물은 고치던 내용을 새로 맞춘다
       projects.forEach(function (p) {
