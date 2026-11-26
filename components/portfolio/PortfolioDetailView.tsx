@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Project } from '@/types';
-import { Lang, TEXT, filterLabel, projectTitle } from '@/lib/i18n';
+import { Lang, TEXT, filterLabel, formatPeriod, projectPurpose, projectTitle } from '@/lib/i18n';
 import ProjectLinks from '@/components/portfolio/ProjectLinks';
 import { isVideo } from '@/lib/media';
 
@@ -10,6 +10,8 @@ import { isVideo } from '@/lib/media';
 export default function PortfolioDetailView({ project, lang }: { project: Project; lang: Lang }) {
   const t = TEXT[lang];
   const title = projectTitle(project, lang);
+  const period = formatPeriod(project.period);
+  const purpose = projectPurpose(project, lang);
 
   return (
     <div lang={lang}>
@@ -24,6 +26,23 @@ export default function PortfolioDetailView({ project, lang }: { project: Projec
           </Link>
 
           <h1 className="text-3xl md:text-4xl mt-6 mb-4 break-keep">{title}</h1>
+
+          {(period || purpose) && (
+            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 mb-5 text-sm">
+              {period && (
+                <>
+                  <dt className="text-text-muted">{t.portfolio.period}</dt>
+                  <dd className="text-text-primary tabular-nums">{period}</dd>
+                </>
+              )}
+              {purpose && (
+                <>
+                  <dt className="text-text-muted">{t.portfolio.purpose}</dt>
+                  <dd className="text-text-primary break-keep">{purpose}</dd>
+                </>
+              )}
+            </dl>
+          )}
 
           <div className="flex flex-wrap gap-2 mb-6">
             {project.tags.map((tag) => (

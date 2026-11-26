@@ -1,0 +1,869 @@
+<title>볼따구 올리기 창구</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+<style>
+/* Layout: one narrow working column. Tabs pick the kind of entry, the form sits under them, and the list of what was sent sits below. */
+:root {
+  --bg: #fbf9f4;
+  --surface: #ffffff;
+  --line: #e4dccb;
+  --fg: #4a3f35;
+  --muted: #8a7c6b;
+  --brand: #a67d4b;
+  --brand-fg: #ffffff;
+  --brand-soft: #f3ecdf;
+  --ok: #3f7d57;
+  --ok-soft: #e4f1e8;
+  --bad: #b3452f;
+  --bad-soft: #f8e6e1;
+  --font-display: "Gowun Dodum", "Noto Sans KR", system-ui, sans-serif;
+  --font-body: "Noto Sans KR", system-ui, -apple-system, "Malgun Gothic", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1f1b17; --surface: #2a2520; --line: #453c32; --fg: #efe7da; --muted: #a99b88;
+    --brand: #c9a576; --brand-fg: #231c14; --brand-soft: #3a3027;
+    --ok: #8fcfa6; --ok-soft: #26382d; --bad: #f0907a; --bad-soft: #45271f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1f1b17; --surface: #2a2520; --line: #453c32; --fg: #efe7da; --muted: #a99b88;
+  --brand: #c9a576; --brand-fg: #231c14; --brand-soft: #3a3027;
+  --ok: #8fcfa6; --ok-soft: #26382d; --bad: #f0907a; --bad-soft: #45271f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+h1 { font-family: var(--font-display); font-size: 28px; font-weight: 400; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--font-display); font-size: 20px; font-weight: 400; margin: 0; }
+.lede { margin: 4px 0 0; color: var(--muted); }
+.notice { padding: 10px 14px; border-radius: 10px; background: var(--bad-soft); color: var(--bad); }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tab {
+  font: inherit; cursor: pointer; padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--fg);
+}
+.tab[aria-selected="true"] { background: var(--brand); border-color: var(--brand); color: var(--brand-fg); }
+.panel {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 20px; display: flex; flex-direction: column; gap: 16px;
+}
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field > span, .label { font-weight: 500; font-size: 14px; }
+.hint { color: var(--muted); font-size: 13px; margin: 0; }
+input[type="text"], textarea {
+  font: inherit; color: var(--fg); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%;
+}
+textarea { min-height: 180px; resize: vertical; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font: inherit; font-size: 14px; cursor: pointer; padding: 5px 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--bg); color: var(--fg);
+}
+.chip[aria-pressed="true"] { background: var(--brand-soft); border-color: var(--brand); color: var(--brand); font-weight: 500; }
+.thumbs { display: flex; flex-wrap: wrap; gap: 12px; min-height: 8px; }
+.thumb { position: relative; width: 92px; display: flex; flex-direction: column; gap: 4px; cursor: grab; touch-action: manipulation; }
+.thumb img, .thumb video { width: 92px; height: 92px; object-fit: contain; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+.thumb .order { font-size: 12px; color: var(--muted); text-align: center; }
+.thumb .new { position: absolute; top: 4px; left: 4px; font-size: 11px; padding: 0 6px; border-radius: 999px; background: var(--brand); color: var(--brand-fg); }
+.thumb .rm {
+  position: absolute; top: -6px; right: -6px; width: 24px; height: 24px; border-radius: 50%;
+  border: none; background: var(--bad); color: #fff; cursor: pointer; font-size: 14px; line-height: 1;
+}
+.thumb.ghost { opacity: .35; }
+.thumb.chosen img { border-color: var(--brand); border-width: 2px; }
+.btn {
+  font: inherit; font-weight: 500; cursor: pointer; padding: 10px 18px; border-radius: 10px;
+  border: 1px solid var(--brand); background: var(--brand); color: var(--brand-fg);
+}
+.btn.quiet { background: transparent; color: var(--brand); }
+.btn.small { padding: 6px 12px; font-size: 14px; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.msg { font-size: 14px; margin: 0; }
+.msg.ok { color: var(--ok); }
+.msg.bad { color: var(--bad); }
+.list { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.item {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0;
+}
+#panel-edit .item { background: var(--bg); gap: 12px; }
+#panel-edit .item input[type="text"] { background: var(--surface); }
+.item-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+.item-title { font-weight: 500; overflow-wrap: anywhere; }
+.kind { font-size: 12px; color: var(--muted); }
+.badge { font-size: 12px; padding: 2px 9px; border-radius: 999px; background: var(--brand-soft); color: var(--brand); }
+.badge.done { background: var(--ok-soft); color: var(--ok); }
+.meta { font-size: 13px; color: var(--muted); margin: 0; overflow-wrap: anywhere; }
+.empty { color: var(--muted); margin: 0; }
+.links { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.link-row {
+  display: flex; align-items: center; gap: 8px; min-width: 0;
+  padding: 6px 8px 6px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface);
+}
+.link-row .txt { min-width: 0; flex: 1; font-size: 14px; overflow-wrap: anywhere; }
+.link-row .txt small { display: block; color: var(--muted); font-size: 12px; }
+.link-row .rm-link { border: none; background: none; color: var(--bad); font: inherit; font-size: 18px; cursor: pointer; padding: 0 6px; }
+.link-add { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto; gap: 6px; }
+@media (max-width: 480px) { .link-add { grid-template-columns: minmax(0, 1fr); } }
+.preset-chip {
+  font: inherit; font-size: 14px; cursor: pointer; padding: 5px 12px; border-radius: 999px;
+  border: 1px dashed var(--brand); background: var(--brand-soft); color: var(--brand);
+}
+.presets-bar { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border-radius: 10px; background: var(--brand-soft); }
+.presets-bar .chips .preset-chip { background: var(--surface); }
+.meta-fields { display: flex; flex-direction: column; gap: 12px; }
+.period-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.period-row input[type="date"] {
+  font: inherit; color: var(--fg); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 0;
+}
+#panel-edit .period-row input[type="date"] { background: var(--surface); }
+.purpose-chips .chip { font-size: 13px; padding: 3px 10px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>볼따구 올리기 창구</h1>
+    <p class="lede">여기에 써서 보내고, Claude에게 "올렸어, 반영해줘"라고 말하면 사이트에 올라갑니다.</p>
+  </header>
+
+  <p class="notice" id="notice" hidden></p>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-add" data-tab="add" aria-selected="true">포폴 추가</button>
+    <button class="tab" role="tab" id="tab-edit" data-tab="edit" aria-selected="false">포폴 수정</button>
+    <button class="tab" role="tab" id="tab-blog" data-tab="blog" aria-selected="false">블로그 글쓰기</button>
+    <button class="tab" role="tab" id="tab-presets" data-tab="presets" aria-selected="false">자주 쓰는 내용</button>
+  </div>
+
+  <section class="panel" id="panel-add">
+    <div class="presets-bar" id="add-presets-bar" hidden>
+      <span class="label">자주 쓰는 내용 불러오기</span>
+      <div id="add-presets"></div>
+    </div>
+    <label class="field"><span>제목</span>
+      <input type="text" id="add-title" maxlength="60" placeholder="예: 네컷만화 #4">
+    </label>
+    <div id="add-meta"></div>
+    <div class="field"><span class="label">해시태그 (여러 개 선택 가능)</span>
+      <div class="chips" id="add-tags"></div>
+    </div>
+    <div class="field"><span class="label">이미지</span>
+      <div class="row">
+        <label class="btn quiet small" for="add-files">이미지 고르기</label>
+        <input type="file" id="add-files" accept="image/png,image/jpeg,image/gif,image/webp,video/mp4,video/webm" multiple hidden>
+        <span class="hint" id="add-upload-state"></span>
+      </div>
+      <div class="thumbs" id="add-thumbs"></div>
+      <p class="hint">이미지를 끌어서 순서를 바꿀 수 있어요. 첫 번째 이미지가 대표 이미지가 됩니다. png, jpg, gif, webp 이미지와 mp4, webm 영상을 올릴 수 있어요. 한 개당 20MB까지.</p>
+    </div>
+    <div class="field"><span class="label">구매 링크 (선택)</span>
+      <div id="add-links"></div>
+      <p class="hint">작업물 카드와 상세 화면에 바로가기 버튼으로 나옵니다.</p>
+    </div>
+    <div class="row">
+      <button class="btn" id="add-send">포폴 추가 보내기</button>
+      <p class="msg" id="add-msg" hidden></p>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-edit" hidden>
+    <p class="hint">제목, 작업 기간, 목적, 해시태그, 이미지를 고친 뒤 그 작업물의 "수정 보내기"를 누르세요. 이미지는 끌어서 순서를 바꾸고, ×로 빼고, "이미지 추가"로 더할 수 있어요.</p>
+    <ul class="list" id="edit-list"></ul>
+    <p class="empty" id="edit-empty">포폴 목록을 불러오는 중입니다.</p>
+  </section>
+
+  <section class="panel" id="panel-blog" hidden>
+    <label class="field"><span>제목</span>
+      <input type="text" id="blog-title" maxlength="80" placeholder="예: 깡총 포토카드 제작 후기">
+    </label>
+    <label class="field"><span>본문</span>
+      <textarea id="blog-body" maxlength="20000" placeholder="글을 써 주세요. 줄바꿈은 그대로 반영됩니다."></textarea>
+    </label>
+    <div class="field"><span class="label">이미지 (선택, 글 아래에 순서대로 들어갑니다)</span>
+      <div class="row">
+        <label class="btn quiet small" for="blog-files">이미지 고르기</label>
+        <input type="file" id="blog-files" accept="image/png,image/jpeg,image/gif,image/webp,video/mp4,video/webm" multiple hidden>
+        <span class="hint" id="blog-upload-state"></span>
+      </div>
+      <div class="thumbs" id="blog-thumbs"></div>
+      <p class="hint">이미지를 끌어서 순서를 바꿀 수 있어요.</p>
+    </div>
+    <div class="row">
+      <button class="btn" id="blog-send">블로그 글 보내기</button>
+      <p class="msg" id="blog-msg" hidden></p>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-presets" hidden>
+    <p class="hint">포폴을 쓸 때 자주 넣는 제목, 해시태그, 링크를 저장해 두면 "포폴 추가"와 "포폴 수정"에서 한 번에 불러올 수 있어요. 제목은 비어 있을 때만 채워집니다.</p>
+    <ul class="list" id="preset-list"></ul>
+    <p class="empty" id="preset-empty">저장한 내용이 없습니다. 아래에서 첫 번째로 만들어 보세요.</p>
+    <h2>새로 만들기</h2>
+    <label class="field"><span>이름</span>
+      <input type="text" id="preset-name" maxlength="30" placeholder="예: 카톡테마 판매용">
+    </label>
+    <label class="field"><span>포폴 제목 (선택)</span>
+      <input type="text" id="preset-title" maxlength="60" placeholder="예: 카톡테마 — 포폴 제목 칸이 비어 있을 때 채워져요">
+    </label>
+    <div class="field"><span class="label">해시태그 (선택)</span>
+      <div class="chips" id="preset-tags"></div>
+    </div>
+    <div class="field"><span class="label">링크 (선택)</span>
+      <div id="preset-links"></div>
+      <p class="hint">버튼 문구(예: 라인 스티커 구매하기)와 링크 주소를 넣어 주세요.</p>
+    </div>
+    <div class="row">
+      <button class="btn" id="preset-save">저장하기</button>
+      <p class="msg" id="preset-msg" hidden></p>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2>보낸 내용</h2>
+    <ul class="list" id="req-list"></ul>
+    <p class="empty" id="req-empty">보낸 내용이 여기에 쌓입니다. 위에서 첫 번째 포폴이나 글을 보내 보세요.</p>
+  </section>
+</div>
+
+<script>
+(function () {
+  // 해시태그 목록은 db의 tags 컬렉션에서 받는다 (받기 전에는 이 기본 목록)
+  var TAGS = ['네컷만화', '버추얼', '스티커출력물', '볼따구캐릭터', '이모티콘', '게임', '카톡테마'];
+  var KIND = { portfolio_add: '포폴 추가', portfolio_edit: '포폴 수정', blog: '블로그 글', tag_add: '해시태그 추가' };
+  var PURPOSES = ['치지직', 'SOOP', '그 외 방송용', '유튜브', '기업 광고', 'SNS/개인용', '기타'];
+  var $ = function (id) { return document.getElementById(id); };
+  var db = null, assets = null;
+  var state = { add: { tags: [], images: [], links: [], meta: { start: '', end: '', purpose: '' }, busy: 0 }, blog: { images: [], busy: 0 } };
+  var projects = [], requests = [], presets = [];
+  var presetDraft = { tags: [], links: [] };
+  var editDrafts = {}; // projectId -> {title, tags, images, links, meta} while the person is editing
+
+  function el(tag, attrs, text) {
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function say(m, text, ok) { m.textContent = text; m.className = 'msg ' + (ok ? 'ok' : 'bad'); m.hidden = false; }
+  function showMsg(id, text, ok) { say($(id), text, ok); }
+  function notice(text) { var n = $('notice'); n.textContent = text; n.hidden = !text; }
+
+  /* ---- tabs ---- */
+  document.querySelectorAll('.tab').forEach(function (t) {
+    t.addEventListener('click', function () {
+      document.querySelectorAll('.tab').forEach(function (o) {
+        var on = o === t;
+        o.setAttribute('aria-selected', on ? 'true' : 'false');
+        $('panel-' + o.dataset.tab).hidden = !on;
+      });
+    });
+  });
+
+  /* ---- tag chips ---- */
+  function renderChips(container, selected, onToggle) {
+    container.textContent = '';
+    TAGS.forEach(function (tag) {
+      var on = selected.indexOf(tag) !== -1;
+      var b = el('button', { type: 'button', class: 'chip', 'aria-pressed': on ? 'true' : 'false' }, '#' + tag);
+      b.addEventListener('click', function () { onToggle(tag); });
+      container.appendChild(b);
+    });
+    container.appendChild(newTagChip(function (name) { if (selected.indexOf(name) === -1) onToggle(name); }));
+  }
+
+  // "+ 새 해시태그": 누르면 입력칸이 열리고, 추가하면 목록에 생기고 지금 작업물에 바로 선택된다
+  function newTagChip(onAdded) {
+    var wrap = el('span', { class: 'row' });
+    wrap.style.gap = '6px';
+    var open = el('button', { type: 'button', class: 'preset-chip' }, '+ 새 해시태그');
+    var input = el('input', { type: 'text', maxlength: '20', placeholder: '예: 굿즈', 'aria-label': '새 해시태그 이름' });
+    input.style.width = '130px'; input.style.padding = '5px 10px';
+    var add = el('button', { type: 'button', class: 'btn small' }, '추가');
+    var cancel = el('button', { type: 'button', class: 'btn quiet small' }, '취소');
+    var msg = el('span', { class: 'msg bad' });
+    input.hidden = add.hidden = cancel.hidden = true;
+    var show = function (on) { open.hidden = on; input.hidden = add.hidden = cancel.hidden = !on; msg.textContent = ''; if (on) input.focus(); };
+    open.addEventListener('click', function () { show(true); });
+    cancel.addEventListener('click', function () { input.value = ''; show(false); });
+    var submit = async function () {
+      var name = input.value.replace(/#/g, '').trim();
+      if (!name) { msg.textContent = '이름을 써 주세요.'; return; }
+      if (TAGS.indexOf(name) !== -1) { input.value = ''; show(false); onAdded(name); return; }
+      if (!db) { msg.textContent = '지금은 추가할 수 없습니다.'; return; }
+      add.disabled = true;
+      try {
+        var now = new Date().toISOString();
+        await db.collection('tags').add({ name: name, order: TAGS.length + 1, status: 'pending', createdAt: now });
+        await db.collection('requests').add({ type: 'tag_add', title: '#' + name, name: name, status: 'pending', createdAt: now });
+        if (TAGS.indexOf(name) === -1) TAGS.push(name);
+        input.value = ''; show(false);
+        onAdded(name);
+      } catch (e) { msg.textContent = '추가하지 못했습니다. 다시 눌러 주세요.'; }
+      add.disabled = false;
+    };
+    add.addEventListener('click', submit);
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); submit(); } });
+    wrap.appendChild(open); wrap.appendChild(input); wrap.appendChild(add); wrap.appendChild(cancel); wrap.appendChild(msg);
+    return wrap;
+  }
+  function toggle(list, tag) {
+    var i = list.indexOf(tag);
+    if (i === -1) list.push(tag); else list.splice(i, 1);
+    list.sort(function (a, b) { return TAGS.indexOf(a) - TAGS.indexOf(b); });
+  }
+  function renderAddChips() {
+    renderChips($('add-tags'), state.add.tags, function (tag) { toggle(state.add.tags, tag); renderAddChips(); });
+  }
+
+  /* ---- 작업 기간 + 목적 입력칸. meta = {start, end, purpose} 를 직접 고친다 ---- */
+  function drawMeta(box, meta) {
+    box.textContent = '';
+    box.className = 'meta-fields';
+    var pf = el('div', { class: 'field' });
+    pf.appendChild(el('span', { class: 'label' }, '작업 기간 (선택)'));
+    var row = el('div', { class: 'period-row' });
+    var s = el('input', { type: 'date', 'aria-label': '작업 시작 날짜' });
+    var e = el('input', { type: 'date', 'aria-label': '작업 끝 날짜' });
+    s.value = meta.start || ''; e.value = meta.end || '';
+    e.min = s.value || '';
+    s.addEventListener('input', function () { meta.start = s.value; e.min = s.value || ''; });
+    e.addEventListener('input', function () { meta.end = e.value; });
+    row.appendChild(s); row.appendChild(el('span', null, '~')); row.appendChild(e);
+    pf.appendChild(row);
+    pf.appendChild(el('p', { class: 'hint' }, '하루 만에 끝났으면 시작 날짜만 넣어도 돼요. 포트폴리오는 이 날짜 기준 최신순으로 정리됩니다.'));
+    box.appendChild(pf);
+
+    var uf = el('div', { class: 'field' });
+    uf.appendChild(el('span', { class: 'label' }, '목적 (선택)'));
+    var input = el('input', { type: 'text', maxlength: '40', placeholder: '예: 치지직 방송용, 버추얼 데뷔', 'aria-label': '목적' });
+    input.value = meta.purpose || '';
+    input.addEventListener('input', function () { meta.purpose = input.value; });
+    uf.appendChild(input);
+    var chips = el('div', { class: 'chips purpose-chips' });
+    PURPOSES.forEach(function (p) {
+      var b = el('button', { type: 'button', class: 'chip' }, p);
+      b.addEventListener('click', function () { input.value = p; meta.purpose = p; });
+      chips.appendChild(b);
+    });
+    uf.appendChild(chips);
+    box.appendChild(uf);
+  }
+  // 요청에 넣을 기간·목적. 날짜가 거꾸로면 null
+  function metaPayload(meta) {
+    var start = (meta.start || '').trim(), end = (meta.end || '').trim();
+    if (!start && end) { start = end; end = ''; }
+    if (start && end && end < start) return null;
+    return { period: start ? (end && end !== start ? { start: start, end: end } : { start: start }) : null, purpose: (meta.purpose || '').trim() };
+  }
+  function metaKey(period, purpose) {
+    var p = period && period.start ? { start: period.start, end: period.end && period.end !== period.start ? period.end : undefined } : null;
+    return JSON.stringify([p, purpose || '']);
+  }
+
+  /* ---- image strip: thumbnails that can be dragged, removed ----
+     list: array of {url, name, isNew?, video?}; rerender() redraws after a change */
+  function drawStrip(box, list, rerender) {
+    box.textContent = '';
+    list.forEach(function (img, i) {
+      var t = el('div', { class: 'thumb' });
+      if (img.video) {
+        var v = el('video', { src: img.url, muted: '', loop: '', autoplay: '', playsinline: '', 'aria-label': img.name || ((i + 1) + '번째 영상') });
+        v.muted = true;
+        t.appendChild(v);
+        t.appendChild(el('span', { class: 'new', style: 'top:auto;bottom:26px' }, '영상'));
+      } else {
+        t.appendChild(el('img', { src: img.url, alt: img.name || ((i + 1) + '번째 이미지') }));
+      }
+      if (img.isNew) t.appendChild(el('span', { class: 'new' }, '새 이미지'));
+      t.appendChild(el('span', { class: 'order' }, i === 0 ? '1번째 · 대표' : (i + 1) + '번째'));
+      var x = el('button', { type: 'button', class: 'rm', 'aria-label': (i + 1) + '번째 이미지 빼기' }, '×');
+      x.addEventListener('click', function () { list.splice(i, 1); rerender(); });
+      t.appendChild(x);
+      box.appendChild(t);
+    });
+    if (window.Sortable && !box._sortable) {
+      box._sortable = window.Sortable.create(box, {
+        animation: 150,
+        delay: 150, delayOnTouchOnly: true, // 폰에서는 살짝 길게 눌러 끌기
+        filter: '.rm', preventOnFilter: false,
+        ghostClass: 'ghost', chosenClass: 'chosen',
+        onEnd: function (e) {
+          if (e.oldIndex === e.newIndex) return;
+          var moved = box._list.splice(e.oldIndex, 1)[0];
+          box._list.splice(e.newIndex, 0, moved);
+          box._rerender();
+        }
+      });
+    }
+    box._list = list; box._rerender = rerender;
+  }
+
+  /* ---- link editor: list of {label, url} with remove, plus a row to add one ---- */
+  function cleanUrl(v) {
+    v = v.trim();
+    if (!v) return '';
+    if (!/^https?:\/\//i.test(v)) v = 'https://' + v;
+    try { var u = new URL(v); return (u.protocol === 'http:' || u.protocol === 'https:') ? u.href : ''; } catch (e) { return ''; }
+  }
+  function addLink(list, link) {
+    if (list.some(function (l) { return l.url === link.url; })) return false;
+    list.push({ label: link.label, url: link.url });
+    return true;
+  }
+  function drawLinks(box, list, onChange) {
+    box.textContent = '';
+    if (list.length) {
+      var ul = el('ul', { class: 'links' });
+      list.forEach(function (l, i) {
+        var li = el('li', { class: 'link-row' });
+        var txt = el('span', { class: 'txt' }, l.label);
+        txt.appendChild(el('small', null, l.url));
+        li.appendChild(txt);
+        var x = el('button', { type: 'button', class: 'rm-link', 'aria-label': l.label + ' 링크 빼기' }, '×');
+        x.addEventListener('click', function () { list.splice(i, 1); drawLinks(box, list, onChange); onChange(); });
+        li.appendChild(x);
+        ul.appendChild(li);
+      });
+      box.appendChild(ul);
+    }
+    var row = el('div', { class: 'link-add' });
+    var label = el('input', { type: 'text', maxlength: '30', placeholder: '버튼 문구', 'aria-label': '버튼 문구' });
+    label.value = '구매하기';
+    var url = el('input', { type: 'text', inputmode: 'url', placeholder: '링크 주소 (https://…)', 'aria-label': '링크 주소' });
+    var add = el('button', { type: 'button', class: 'btn quiet small' }, '링크 추가');
+    var msg = el('p', { class: 'msg' }); msg.hidden = true;
+    add.addEventListener('click', function () {
+      var u = cleanUrl(url.value);
+      if (!u) return say(msg, '링크 주소를 확인해 주세요.', false);
+      if (!addLink(list, { label: label.value.trim() || '구매하기', url: u })) return say(msg, '이미 넣은 링크입니다.', false);
+      drawLinks(box, list, onChange); onChange();
+    });
+    // 주소만 써 두고 "링크 추가"를 안 눌렀을 때 저장·보내기 직전에 넣어 준다. 주소가 잘못되면 false.
+    box._takePending = function () {
+      if (!url.value.trim()) return true;
+      var u = cleanUrl(url.value);
+      if (!u) { say(msg, '링크 주소를 확인해 주세요.', false); return false; }
+      addLink(list, { label: label.value.trim() || '구매하기', url: u });
+      drawLinks(box, list, onChange); onChange();
+      return true;
+    };
+    row.appendChild(label); row.appendChild(url); row.appendChild(add);
+    box.appendChild(row); box.appendChild(msg);
+    box.style.display = 'flex'; box.style.flexDirection = 'column'; box.style.gap = '8px';
+  }
+
+  /* ---- saved presets (자주 쓰는 내용) ---- */
+  // target: {getTitle, setTitle, tags[], links[], refresh()}. 무엇을 넣었는지 문장으로 돌려준다.
+  function applyPreset(p, target) {
+    var done = [];
+    if (p.title && !target.getTitle().trim()) { target.setTitle(p.title); done.push('제목'); }
+    (p.tags || []).forEach(function (t) { if (target.tags.indexOf(t) === -1) { toggle(target.tags, t); done.push('#' + t); } });
+    (p.links || []).forEach(function (l) { if (addLink(target.links, l)) done.push(l.label + ' 링크'); });
+    target.refresh();
+    if (done.length) return { ok: true, text: done.join(', ') + '을(를) 넣었어요.' };
+    if (!(p.links || []).length && !(p.tags || []).length) {
+      return { ok: false, text: '"' + p.name + '"에 링크가 저장되어 있지 않아요. 자주 쓰는 내용 탭에서 다시 만들어 주세요.' };
+    }
+    return { ok: false, text: '"' + p.name + '"의 내용이 이미 들어 있어요.' };
+  }
+  function drawPresetChips(box, target) {
+    box.textContent = '';
+    var chips = el('div', { class: 'chips' });
+    var msg = el('p', { class: 'msg' }); msg.hidden = true;
+    presets.forEach(function (p) {
+      var b = el('button', { type: 'button', class: 'preset-chip' }, '+ ' + p.name);
+      b.addEventListener('click', function () { var r = applyPreset(p, target); say(msg, r.text, r.ok); });
+      chips.appendChild(b);
+    });
+    box.appendChild(chips); box.appendChild(msg);
+  }
+  var addTarget = {
+    getTitle: function () { return $('add-title').value; },
+    setTitle: function (v) { $('add-title').value = v; },
+    tags: state.add.tags, links: state.add.links,
+    refresh: function () { renderAddChips(); renderAddLinks(); }
+  };
+  function renderAddLinks() { drawLinks($('add-links'), state.add.links, function () {}); }
+  function renderAddPresets() {
+    $('add-presets-bar').hidden = presets.length === 0;
+    drawPresetChips($('add-presets'), addTarget);
+  }
+
+  function renderPresetForm() {
+    var paint = function () { renderChips($('preset-tags'), presetDraft.tags, function (tag) { toggle(presetDraft.tags, tag); paint(); }); };
+    paint();
+    drawLinks($('preset-links'), presetDraft.links, function () {});
+  }
+  function renderPresetList() {
+    var list = $('preset-list'); list.textContent = '';
+    $('preset-empty').hidden = presets.length > 0;
+    presets.forEach(function (p) {
+      var li = el('li', { class: 'item' });
+      var head = el('div', { class: 'item-head' });
+      head.appendChild(el('span', { class: 'item-title' }, p.name));
+      li.appendChild(head);
+      var bits = [];
+      if (p.title) bits.push('제목: ' + p.title);
+      if (p.tags && p.tags.length) bits.push(p.tags.map(function (t) { return '#' + t; }).join(' '));
+      (p.links || []).forEach(function (l) { bits.push(l.label + ' → ' + l.url); });
+      li.appendChild(el('p', { class: 'meta' }, bits.join(' · ') || '내용 없음'));
+      var row = el('div', { class: 'row' });
+      var del = el('button', { type: 'button', class: 'btn quiet small' }, '지우기');
+      var sure = el('button', { type: 'button', class: 'btn small' }, '정말 지우기');
+      sure.hidden = true;
+      del.addEventListener('click', function () { del.hidden = true; sure.hidden = false; });
+      sure.addEventListener('click', async function () {
+        sure.disabled = true;
+        try { await db.collection('presets').doc(p.id).delete(); } catch (e) { sure.disabled = false; }
+      });
+      row.appendChild(del); row.appendChild(sure);
+      li.appendChild(row);
+      list.appendChild(li);
+    });
+  }
+  $('preset-save').addEventListener('click', async function () {
+    var name = $('preset-name').value.trim();
+    var title = $('preset-title').value.trim();
+    if (!$('preset-links')._takePending()) return;
+    if (!name) return showMsg('preset-msg', '이름을 써 주세요.', false);
+    if (!title && !presetDraft.tags.length && !presetDraft.links.length) return showMsg('preset-msg', '제목, 해시태그, 링크 중 하나는 넣어 주세요.', false);
+    if (!db) return showMsg('preset-msg', '지금은 저장할 수 없습니다.', false);
+    var btn = $('preset-save'); btn.disabled = true;
+    try {
+      await db.collection('presets').add({
+        name: name, title: title, tags: presetDraft.tags.slice(), links: presetDraft.links.slice(),
+        createdAt: new Date().toISOString()
+      });
+      $('preset-name').value = ''; $('preset-title').value = '';
+      presetDraft.tags.length = 0; presetDraft.links.length = 0;
+      renderPresetForm();
+      showMsg('preset-msg', '저장했습니다. 포폴 추가·수정에서 불러올 수 있어요.', true);
+    } catch (e) { showMsg('preset-msg', '저장하지 못했습니다. 다시 눌러 주세요.', false); }
+    btn.disabled = false;
+  });
+
+  /* ---- uploading picked files ---- */
+  function uploadError(f, err) {
+    var code = err && err.code;
+    var why = code === 'too_large' ? '20MB를 넘습니다.'
+      : code === 'unsupported_type' ? 'png, jpg, gif, webp 이미지나 mp4, webm 영상만 올릴 수 있습니다.'
+      : code === 'quota_or_state' ? '저장 공간이 가득 찼습니다. Claude에게 정리해 달라고 해 주세요.'
+      : '올리지 못했습니다. 잠시 뒤 다시 골라 주세요.';
+    return f.name + ': ' + why;
+  }
+  // files를 하나씩 올리고, 올라갈 때마다 onEach({id, url, name, video})
+  async function uploadFiles(files, onEach, onError, onBusy) {
+    var left = files.length; onBusy(left);
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i];
+      try {
+        var r = await assets.upload(f);
+        var video = /^video\//.test(r.contentType || f.type || '');
+        onEach({ id: r.id, url: r.url, name: f.name, isNew: true, video: video });
+      } catch (err) { onError(uploadError(f, err)); }
+      left -= 1; onBusy(left);
+    }
+  }
+
+  function renderThumbs(key) { drawStrip($(key + '-thumbs'), state[key].images, function () { renderThumbs(key); }); }
+  function wireFiles(key) {
+    $(key + '-files').addEventListener('change', function (e) {
+      var files = Array.prototype.slice.call(e.target.files || []);
+      e.target.value = '';
+      if (!files.length) return;
+      if (!assets) { showMsg(key + '-msg', '지금은 이미지를 올릴 수 없습니다. 페이지를 새로 열어 주세요.', false); return; }
+      uploadFiles(files,
+        function (img) { state[key].images.push(img); renderThumbs(key); },
+        function (text) { showMsg(key + '-msg', text, false); },
+        function (left) {
+          state[key].busy = left;
+          $(key + '-upload-state').textContent = left ? '이미지 올리는 중… (' + left + '장 남음)' : '';
+          $(key + '-send').disabled = left > 0;
+        });
+    });
+  }
+  wireFiles('add'); wireFiles('blog');
+
+  /* ---- sending ---- */
+  async function send(key, data, after) {
+    if (!db) { showMsg(key + '-msg', '지금은 보낼 수 없습니다. 페이지를 새로 열어 주세요.', false); return; }
+    var btn = $(key + '-send'); btn.disabled = true;
+    try {
+      data.status = 'pending';
+      data.createdAt = new Date().toISOString();
+      await db.collection('requests').add(data);
+      after();
+      showMsg(key + '-msg', '보냈습니다. Claude에게 "올렸어, 반영해줘"라고 말해 주세요.', true);
+    } catch (err) {
+      showMsg(key + '-msg', '보내지 못했습니다. 잠시 뒤 다시 눌러 주세요.', false);
+    }
+    btn.disabled = state[key] ? state[key].busy > 0 : false;
+  }
+  $('add-send').addEventListener('click', function () {
+    var title = $('add-title').value.trim();
+    if (!$('add-links')._takePending()) return;
+    if (!title) return showMsg('add-msg', '제목을 써 주세요.', false);
+    if (!state.add.tags.length) return showMsg('add-msg', '해시태그를 하나 이상 골라 주세요.', false);
+    if (!state.add.images.length) return showMsg('add-msg', '이미지를 한 장 이상 올려 주세요.', false);
+    var meta = metaPayload(state.add.meta);
+    if (!meta) return showMsg('add-msg', '작업 기간의 끝 날짜가 시작 날짜보다 앞이에요.', false);
+    var data = {
+      type: 'portfolio_add', title: title, tags: state.add.tags.slice(),
+      images: state.add.images.map(function (i) { return { id: i.id, name: i.name }; }),
+      links: state.add.links.slice()
+    };
+    if (meta.period) data.period = meta.period;
+    if (meta.purpose) data.purpose = meta.purpose;
+    send('add', data, function () {
+      // 배열을 비우기만 해서 불러오기 대상(addTarget)이 같은 배열을 계속 가리키게 한다
+      $('add-title').value = ''; state.add.tags.length = 0; state.add.images.length = 0; state.add.links.length = 0;
+      state.add.meta.start = state.add.meta.end = state.add.meta.purpose = '';
+      renderAddChips(); renderThumbs('add'); renderAddLinks(); drawMeta($('add-meta'), state.add.meta);
+    });
+  });
+  $('blog-send').addEventListener('click', function () {
+    var title = $('blog-title').value.trim(), body = $('blog-body').value.trim();
+    if (!title) return showMsg('blog-msg', '제목을 써 주세요.', false);
+    if (!body) return showMsg('blog-msg', '본문을 써 주세요.', false);
+    send('blog', {
+      type: 'blog', title: title, body: body,
+      images: state.blog.images.map(function (i) { return { id: i.id, name: i.name }; })
+    }, function () {
+      $('blog-title').value = ''; $('blog-body').value = ''; state.blog.images = [];
+      renderThumbs('blog');
+    });
+  });
+
+  /* ---- edit existing portfolio ---- */
+  function projectImages(p) {
+    return (p.images || []).map(function (img) {
+      return { path: img.path, thumb: img.thumb, url: img.thumb ? '/_blob/' + img.thumb : '', name: (img.path || '').split('/').pop() };
+    });
+  }
+  function imageKey(list) {
+    return list.map(function (i) { return i.path || ('new:' + i.id); }).join('|');
+  }
+  function freshDraft(p) {
+    return {
+      title: p.title, tags: (p.tags || []).slice(), images: projectImages(p),
+      links: (p.links || []).map(function (l) { return { label: l.label, url: l.url }; }),
+      meta: { start: (p.period && p.period.start) || '', end: (p.period && p.period.end) || '', purpose: p.purpose || '' }
+    };
+  }
+  function linkKey(list) { return JSON.stringify((list || []).map(function (l) { return [l.label, l.url]; })); }
+
+  function renderEdit() {
+    var list = $('edit-list'); list.textContent = '';
+    $('edit-empty').hidden = projects.length > 0;
+    projects.forEach(function (p) {
+      var d = editDrafts[p.id] || (editDrafts[p.id] = freshDraft(p));
+      var li = el('li', { class: 'item' });
+
+      var input = el('input', { type: 'text', id: 'edit-title-' + p.id, maxlength: '60', 'aria-label': p.title + ' 제목' });
+      input.value = d.title;
+      input.addEventListener('input', function () { d.title = input.value; });
+      li.appendChild(input);
+
+      var metaBox = el('div');
+      drawMeta(metaBox, d.meta);
+      li.appendChild(metaBox);
+
+      var chips = el('div', { class: 'chips' });
+      var paint = function () { renderChips(chips, d.tags, function (tag) { toggle(d.tags, tag); paint(); }); };
+      paint();
+      li.appendChild(chips);
+
+      var strip = el('div', { class: 'thumbs' });
+      var redraw = function () { drawStrip(strip, d.images, redraw); };
+      redraw();
+      li.appendChild(strip);
+
+      var linkBox = el('div');
+      var drawItemLinks = function () { drawLinks(linkBox, d.links, function () {}); };
+      drawItemLinks();
+      if (presets.length) {
+        var pchips = el('div');
+        drawPresetChips(pchips, {
+          getTitle: function () { return d.title; },
+          setTitle: function (v) { d.title = v; input.value = v; },
+          tags: d.tags, links: d.links,
+          refresh: function () { paint(); drawItemLinks(); }
+        });
+        li.appendChild(pchips);
+      }
+      li.appendChild(linkBox);
+
+      var row = el('div', { class: 'row' });
+      var fileId = 'edit-files-' + p.id;
+      var pick = el('label', { class: 'btn quiet small', for: fileId }, '이미지 추가');
+      var file = el('input', { type: 'file', id: fileId, accept: 'image/png,image/jpeg,image/gif,image/webp,video/mp4,video/webm', multiple: '' });
+      file.hidden = true;
+      var upState = el('span', { class: 'hint' });
+      var btn = el('button', { type: 'button', class: 'btn small' }, '수정 보내기');
+      var msg = el('p', { class: 'msg' }); msg.hidden = true;
+
+      file.addEventListener('change', function (e) {
+        var files = Array.prototype.slice.call(e.target.files || []);
+        e.target.value = '';
+        if (!files.length) return;
+        if (!assets) return say(msg, '지금은 이미지를 올릴 수 없습니다.', false);
+        uploadFiles(files,
+          function (img) { d.images.push(img); redraw(); },
+          function (text) { say(msg, text, false); },
+          function (left) { upState.textContent = left ? '올리는 중… (' + left + '장 남음)' : ''; btn.disabled = left > 0; });
+      });
+
+      btn.addEventListener('click', async function () {
+        var title = d.title.trim();
+        if (!linkBox._takePending()) return;
+        if (!title) return say(msg, '제목을 써 주세요.', false);
+        if (!d.tags.length) return say(msg, '해시태그를 하나 이상 골라 주세요.', false);
+        if (!d.images.length) return say(msg, '이미지를 한 장 이상 남겨 주세요.', false);
+        var imagesChanged = imageKey(d.images) !== imageKey(projectImages(p));
+        var linksChanged = linkKey(d.links) !== linkKey(p.links);
+        var meta = metaPayload(d.meta);
+        if (!meta) return say(msg, '작업 기간의 끝 날짜가 시작 날짜보다 앞이에요.', false);
+        var metaChanged = metaKey(meta.period, meta.purpose) !== metaKey(p.period, p.purpose);
+        if (title === p.title && d.tags.join() === (p.tags || []).join() && !imagesChanged && !linksChanged && !metaChanged) return say(msg, '바뀐 내용이 없습니다.', false);
+        if (!db) return say(msg, '지금은 보낼 수 없습니다.', false);
+        btn.disabled = true;
+        var data = {
+          type: 'portfolio_edit', projectId: p.id, oldTitle: p.title, title: title, tags: d.tags.slice(),
+          status: 'pending', createdAt: new Date().toISOString()
+        };
+        if (imagesChanged) {
+          data.images = d.images.map(function (i) { return i.path ? { path: i.path } : { id: i.id, name: i.name }; });
+        }
+        if (linksChanged) data.links = d.links.slice();
+        if (metaChanged) { data.period = meta.period; data.purpose = meta.purpose; }
+        try {
+          await db.collection('requests').add(data);
+          say(msg, '보냈습니다. Claude에게 "올렸어, 반영해줘"라고 말해 주세요.', true);
+        } catch (err) { say(msg, '보내지 못했습니다. 다시 눌러 주세요.', false); }
+        btn.disabled = false;
+      });
+
+      row.appendChild(pick); row.appendChild(file); row.appendChild(upState); row.appendChild(btn); row.appendChild(msg);
+      li.appendChild(row);
+      list.appendChild(li);
+    });
+  }
+
+  /* ---- sent list ---- */
+  function renderRequests() {
+    var list = $('req-list'); list.textContent = '';
+    $('req-empty').hidden = requests.length > 0;
+    requests.forEach(function (r) {
+      var li = el('li', { class: 'item' });
+      var head = el('div', { class: 'item-head' });
+      head.appendChild(el('span', { class: 'kind' }, KIND[r.type] || r.type));
+      head.appendChild(el('span', { class: 'item-title' }, r.title || ''));
+      head.appendChild(el('span', { class: 'badge' + (r.status === 'done' ? ' done' : '') }, r.status === 'done' ? '사이트에 반영됨' : '반영 대기 중'));
+      li.appendChild(head);
+      var bits = [];
+      if (r.type === 'portfolio_edit' && r.oldTitle && r.oldTitle !== r.title) bits.push('이전 제목: ' + r.oldTitle);
+      if (r.type === 'tag_add') bits.push('사이트 필터 버튼에 추가됩니다');
+      if (r.period && r.period.start) bits.push('기간 ' + r.period.start.replace(/-/g, '.') + (r.period.end ? ' - ' + r.period.end.replace(/-/g, '.') : ''));
+      if (r.purpose) bits.push('목적: ' + r.purpose);
+      if (r.tags && r.tags.length) bits.push(r.tags.map(function (t) { return '#' + t; }).join(' '));
+      if (r.images && r.images.length) {
+        var added = r.images.filter(function (i) { return !i.path; }).length;
+        bits.push(r.type === 'portfolio_edit'
+          ? '이미지 ' + r.images.length + '장으로 변경' + (added ? ' (새 이미지 ' + added + '장)' : '')
+          : '이미지 ' + r.images.length + '장');
+      }
+      if (r.links) bits.push(r.links.length ? '링크 ' + r.links.map(function (l) { return l.label; }).join(', ') : '링크 모두 빼기');
+      if (r.createdAt) bits.push(new Date(r.createdAt).toLocaleString('ko-KR', { dateStyle: 'medium', timeStyle: 'short' }));
+      li.appendChild(el('p', { class: 'meta' }, bits.join(' · ')));
+      if (r.status !== 'done') {
+        var row = el('div', { class: 'row' });
+        var cancel = el('button', { type: 'button', class: 'btn quiet small' }, '보내기 취소');
+        cancel.addEventListener('click', async function () {
+          cancel.disabled = true;
+          try { await db.collection('requests').doc(r.id).delete(); } catch (err) { cancel.disabled = false; }
+        });
+        row.appendChild(cancel); li.appendChild(row);
+      }
+      list.appendChild(li);
+    });
+  }
+
+  /* ---- boot ---- */
+  renderAddChips(); renderAddLinks(); renderPresetForm(); drawMeta($('add-meta'), state.add.meta);
+  (async function () {
+    var use = window.claude && window.claude.use;
+    if (!use) { notice('이 페이지는 claude.ai에서 열어야 보내기가 됩니다.'); $('edit-empty').textContent = '포폴 목록을 불러올 수 없습니다.'; return; }
+    db = await window.claude.use('db');
+    assets = await window.claude.use('assets');
+    if (!db) { notice('로그인된 상태에서만 보낼 수 있습니다. claude.ai에 로그인한 뒤 다시 열어 주세요.'); $('edit-empty').textContent = '포폴 목록을 불러올 수 없습니다.'; return; }
+    if (!assets) notice('이 화면에서는 이미지를 올릴 수 없습니다. 글과 제목 수정만 보낼 수 있습니다.');
+
+    var timer = setTimeout(function () { notice('목록을 아직 불러오지 못했습니다. 연결을 확인해 주세요.'); }, 10000);
+    var loaded = function (snap) { if (!snap.metadata.fromCache) { clearTimeout(timer); if (assets) notice(''); } };
+    var failed = function () { clearTimeout(timer); notice('목록을 불러오지 못했습니다. 페이지를 새로 열어 주세요.'); };
+
+    db.collection('projects').onSnapshot(function (snap) {
+      loaded(snap);
+      projects = snap.docs.map(function (d) {
+        var v = d.data() || {};
+        return { id: d.id, title: v.title || '', tags: v.tags || [], order: v.order || 0, images: v.images || [], links: v.links || [], period: v.period || null, purpose: v.purpose || '' };
+      }).sort(function (a, b) {
+        // 사이트와 같이: 작업 기간이 있으면 최근 작업 순, 없으면 그 뒤에 원래 순서
+        var da = (a.period && (a.period.end || a.period.start)) || '', dbb = (b.period && (b.period.end || b.period.start)) || '';
+        if (da && dbb) return dbb.localeCompare(da) || a.order - b.order;
+        if (da || dbb) return da ? -1 : 1;
+        return a.order - b.order;
+      });
+      // 사이트에 반영되어 내용이 바뀐 작업물은 고치던 내용을 새로 맞춘다
+      projects.forEach(function (p) {
+        var d = editDrafts[p.id];
+        if (d && d.base !== JSON.stringify(p)) delete editDrafts[p.id];
+      });
+      projects.forEach(function (p) {
+        if (!editDrafts[p.id]) { editDrafts[p.id] = freshDraft(p); editDrafts[p.id].base = JSON.stringify(p); }
+      });
+      if (!projects.length) $('edit-empty').textContent = '아직 등록된 포폴이 없습니다.';
+      renderEdit();
+    }, failed);
+
+    db.collection('tags').onSnapshot(function (snap) {
+      loaded(snap);
+      var names = snap.docs.map(function (d) { return d.data() || {}; })
+        .sort(function (a, b) { return (a.order || 0) - (b.order || 0); })
+        .map(function (t) { return t.name; })
+        .filter(function (n) { return !!n; });
+      if (names.length) TAGS = names;
+      renderAddChips(); renderPresetForm(); renderEdit();
+    }, failed);
+
+    db.collection('presets').onSnapshot(function (snap) {
+      loaded(snap);
+      presets = snap.docs.map(function (d) { var v = d.data() || {}; return Object.assign({ id: d.id }, v); })
+        .sort(function (a, b) { return String(a.createdAt || '').localeCompare(String(b.createdAt || '')); });
+      renderAddPresets(); renderPresetList(); renderEdit();
+    }, failed);
+
+    db.collection('requests').onSnapshot(function (snap) {
+      loaded(snap);
+      requests = snap.docs.map(function (d) { var v = d.data() || {}; return Object.assign({ id: d.id }, v); })
+        .sort(function (a, b) { return String(b.createdAt || '').localeCompare(String(a.createdAt || '')); });
+      renderRequests();
+    }, failed);
+  })();
+})();
+</script>

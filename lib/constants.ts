@@ -38,7 +38,18 @@ export const PURPOSE_OPTIONS: PurposeOption[] = [
 ];
 
 // 포트폴리오 데이터: content/portfolio.json
-export const PROJECTS = portfolioData as Project[];
+// 작업 기간이 있는 작업물은 최근 작업(끝 날짜, 없으면 시작 날짜) 순서로 앞에,
+// 기간이 없는 작업물은 그 뒤에 portfolio.json 순서대로 놓는다.
+const projectDate = (p: Project) => p.period?.end || p.period?.start || '';
+export const PROJECTS = (portfolioData as Project[])
+  .map((p, i) => ({ p, i }))
+  .sort((a, b) => {
+    const da = projectDate(a.p), db = projectDate(b.p);
+    if (da && db) return db.localeCompare(da) || a.i - b.i;
+    if (da || db) return da ? -1 : 1;
+    return a.i - b.i;
+  })
+  .map(({ p }) => p);
 
 // 블로그 글: content/blog.json (최신 글이 먼저)
 export const BLOG_POSTS = (blogData as BlogPost[])

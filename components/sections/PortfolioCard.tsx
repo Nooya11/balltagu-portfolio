@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Project } from '@/types';
-import { Lang, TEXT, filterLabel, langPrefix, projectTitle } from '@/lib/i18n';
+import { Lang, TEXT, filterLabel, formatPeriod, langPrefix, projectTitle } from '@/lib/i18n';
 import { COMIC_GUIDE_SLUG } from '@/lib/constants';
 import { isVideo } from '@/lib/media';
 import ProjectLinks from '@/components/portfolio/ProjectLinks';
@@ -102,6 +102,10 @@ export default function PortfolioCard({
             {title}
           </Link>
         </h3>
+
+        {project.period?.start && (
+          <p className="text-xs text-text-muted -mt-1 tabular-nums">{formatPeriod(project.period)}</p>
+        )}
 
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (

@@ -27,6 +27,8 @@ export const TEXT = {
       prev: '이전 이미지',
       next: '다음 이미지',
       back: '← 포트폴리오로 돌아가기',
+      period: '작업 기간',
+      purpose: '목적',
     },
     faq: { title: '자주 묻는 질문' },
     blog: {
@@ -85,6 +87,8 @@ export const TEXT = {
       prev: 'Previous image',
       next: 'Next image',
       back: '← Back to portfolio',
+      period: 'Work period',
+      purpose: 'Purpose',
     },
     faq: { title: 'Frequently asked questions' },
     blog: {
@@ -143,6 +147,8 @@ export const TEXT = {
       prev: '前の画像',
       next: '次の画像',
       back: '← ポートフォリオに戻る',
+      period: '制作期間',
+      purpose: '用途',
     },
     faq: { title: 'よくある質問' },
     blog: {
@@ -241,3 +247,23 @@ export const LANGUAGES: { lang: Lang; label: string }[] = [
   { lang: 'en', label: 'EN' },
   { lang: 'ja', label: 'JP' },
 ];
+
+// 작업 기간 표기: 2026.10.12 - 2026.11.26 (하루짜리나 끝 날짜가 없으면 한 날짜만)
+export const formatPeriod = (period?: { start: string; end?: string }) => {
+  if (!period?.start) return '';
+  const dot = (d: string) => d.replace(/-/g, '.');
+  return period.end && period.end !== period.start ? `${dot(period.start)} - ${dot(period.end)}` : dot(period.start);
+};
+
+// 목적의 언어별 표기: 번역이 있으면 번역, 사용목적 선택지와 같으면 그 번역, 없으면 한국어 그대로
+export const projectPurpose = (
+  project: { purpose?: string; purposeEn?: string; purposeJa?: string },
+  lang: Lang
+) => {
+  if (!project.purpose) return '';
+  if (lang === 'ko') return project.purpose;
+  const translated = lang === 'en' ? project.purposeEn : project.purposeJa;
+  if (translated) return translated;
+  const known = PURPOSE_LABELS[lang][project.purpose as PurposeOption];
+  return known ?? project.purpose;
+};

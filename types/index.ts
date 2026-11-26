@@ -18,6 +18,10 @@ export interface Project {
   images: string[]; // 이미지 경로 배열 (첫 장이 대표 이미지)
   pixelated?: boolean; // 도트(픽셀) 그림: 확대해도 흐려지지 않게 표시
   links?: ProjectLink[]; // 구매처 등 바로가기 버튼
+  period?: { start: string; end?: string }; // 작업 기간 (YYYY-MM-DD)
+  purpose?: string; // 목적 (예: 치지직 방송용)
+  purposeEn?: string;
+  purposeJa?: string;
 }
 
 export interface ProjectLink {
