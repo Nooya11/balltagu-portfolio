@@ -236,6 +236,7 @@ const LINK_LABELS: Record<string, Record<Exclude<Lang, 'ko'>, string>> = {
   'OGQ 마켓에서 구매하기': { en: 'Buy on OGQ Market', ja: 'OGQマーケットで購入' },
   구매하기: { en: 'Buy', ja: '購入する' },
   '라인 스티커 구매하기': { en: 'Buy LINE stickers', ja: 'LINEスタンプを購入' },
+  '댓글 전부 그렸습니다...': { en: 'I drew every comment...', ja: 'コメント全部描きました…' },
 };
 
 export const linkLabel = (label: string, lang: Lang) =>

@@ -17,7 +17,12 @@
         "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
       }
     ],
-    "purpose": "SNS/개인용"
+    "period": {
+      "start": "2023-01-30"
+    },
+    "purpose": "개인용 캐릭터 디자인 및 이모티콘 제작하였습니다.",
+    "purposeEn": "Designed a personal character and created an emoticon set.",
+    "purposeJa": "個人用のキャラクターデザインとスタンプを制作しました。"
   },
   {
     "id": "vemo-1",
@@ -32,7 +37,13 @@
     "images": [
       "/portfolio/버추얼/볼따구-버추얼-이모티콘/1.gif",
       "/portfolio/버추얼/볼따구-버추얼-이모티콘/5.gif"
-    ]
+    ],
+    "period": {
+      "start": "2026-11-19"
+    },
+    "purpose": "Live 2D 버추얼 캐릭터 디자인, 리깅 및 움직이는 이모티콘 제작하였습니다.",
+    "purposeEn": "Designed and rigged a Live2D VTuber character and created animated emoticons.",
+    "purposeJa": "Live2D VTuberキャラクターのデザイン、リギング、動くスタンプを制作しました。"
   },
   {
     "id": "comic-1",
@@ -44,7 +55,13 @@
     ],
     "images": [
       "/portfolio/네컷만화/무제80 (1).png"
-    ]
+    ],
+    "period": {
+      "start": "2025-10-29"
+    },
+    "purpose": "기업 광고, 잠옷 판매를 위한 네컷만화 작업하였습니다.",
+    "purposeEn": "Created a four-panel comic for a corporate ad promoting pajama sales.",
+    "purposeJa": "企業広告として、パジャマ販売のための4コマ漫画を制作しました。"
   },
   {
     "id": "comic-2",
@@ -57,7 +74,13 @@
     ],
     "images": [
       "/portfolio/네컷만화/무제88_20261112145534.png"
-    ]
+    ],
+    "period": {
+      "start": "2025-10-29"
+    },
+    "purpose": "치지직, 유튜브 이치카와 나인님의 버추얼 데뷔 방송용 네컷만화 작업하였습니다.",
+    "purposeEn": "Created a four-panel comic for Ichikawa Nine's VTuber debut stream on CHZZK and YouTube.",
+    "purposeJa": "CHZZK・YouTubeで活動するイチカワナインさんのVTuberデビュー配信用4コマ漫画を制作しました。"
   },
   {
     "id": "comic-3",
@@ -70,7 +93,13 @@
     ],
     "images": [
       "/portfolio/네컷만화/무제97 (1).png"
-    ]
+    ],
+    "period": {
+      "start": "2025-12-14"
+    },
+    "purpose": "SOOP 묘몽님 데뷔 방송용 네컷만화 작업하였습니다.",
+    "purposeEn": "Created a four-panel comic for Myomong's debut stream on SOOP.",
+    "purposeJa": "SOOPで活動するミョモンさんのデビュー配信用4コマ漫画を制作しました。"
   },
   {
     "id": "virtual-1",
@@ -86,7 +115,10 @@
       "/portfolio/네컷만화_버추얼/2.png",
       "/portfolio/네컷만화_버추얼/3.png",
       "/portfolio/네컷만화_버추얼/4.png"
-    ]
+    ],
+    "purpose": "치지직 이쿠롬님 데뷔 방송용 만화 제작하였습니다.",
+    "purposeEn": "Created a comic for Ikurom's debut stream on CHZZK.",
+    "purposeJa": "CHZZKで活動するイクロムさんのデビュー配信用漫画を制作しました。"
   },
   {
     "id": "animal-1",
@@ -101,7 +133,14 @@
       "/portfolio/네컷만화_동물/무제106 (1).png",
       "/portfolio/네컷만화_동물/무제107 (1).png",
       "/portfolio/네컷만화_동물/무제81 (1).png"
-    ]
+    ],
+    "period": {
+      "start": "2025-12-08",
+      "end": "2026-01-02"
+    },
+    "purpose": "유튜브 앵퐁님 개인 SNS 업로드용 네컷만화 제작하였습니다.",
+    "purposeEn": "Created a four-panel comic for YouTuber Aengpong to post on social media.",
+    "purposeJa": "YouTuberのエンポンさんのSNS投稿用4コマ漫画を制作しました。"
   },
   {
     "id": "sticker-1",
@@ -113,7 +152,13 @@
     ],
     "images": [
       "/portfolio/스티커_출력물/260327_colorname_볼따구는 귀여워_봄의 볼찌.png"
-    ]
+    ],
+    "period": {
+      "start": "2026-03-13"
+    },
+    "purpose": "다이소, 핫트랙스, 교보문고 등에 있는 폴럽 이글루 스티커 기계 판매용 네임스티커 제작하였습니다.",
+    "purposeEn": "Created name stickers sold through Pollup Igloo sticker machines at Daiso, Hottracks, Kyobo Book Centre and other stores.",
+    "purposeJa": "ダイソー、ホットトラックス、教保文庫などにあるPollup Iglooステッカーマシンで販売するネームステッカーを制作しました。"
   },
   {
     "id": "sticker-2",
@@ -125,7 +170,13 @@
     ],
     "images": [
       "/portfolio/스티커_출력물/260604_ColorName_볼따구는 귀여워_해파리넴스.png"
-    ]
+    ],
+    "period": {
+      "start": "2026-06-04"
+    },
+    "purpose": "다이소, 핫트랙스, 교보문고 등에 있는 폴럽 이글루 스티커 기계 판매용 네임스티커 제작하였습니다.",
+    "purposeEn": "Created name stickers sold through Pollup Igloo sticker machines at Daiso, Hottracks, Kyobo Book Centre and other stores.",
+    "purposeJa": "ダイソー、ホットトラックス、教保文庫などにあるPollup Iglooステッカーマシンで販売するネームステッカーを制作しました。"
   },
   {
     "id": "sticker-3",
@@ -138,7 +189,13 @@
     "images": [
       "/portfolio/스티커_출력물/깡총-포토카드/1.png",
       "/portfolio/스티커_출력물/깡총-포토카드/2.png"
-    ]
+    ],
+    "period": {
+      "start": "2026-10-05"
+    },
+    "purpose": "다이소, 핫트랙스, 교보문고 등에 있는 폴럽 이글루 스티커 기계 10월 폴럽 IP 기획전 「합격운 충전소」 판매용 PVC 포토카드 제작하였습니다.",
+    "purposeEn": "Created a PVC photocard for Pollup's October IP exhibition 「Pass-Luck Charging Station」, sold through Pollup Igloo sticker machines at Daiso, Hottracks, Kyobo Book Centre and other stores.",
+    "purposeJa": "ダイソー、ホットトラックス、教保文庫などにあるPollup Iglooステッカーマシンの10月Pollup IP企画展「合格運チャージステーション」で販売するPVCフォトカードを制作しました。"
   },
   {
     "id": "custom-1",
@@ -153,6 +210,18 @@
       "/portfolio/커스텀의뢰/2.png",
       "/portfolio/커스텀의뢰/3.png",
       "/portfolio/커스텀의뢰/4.png"
+    ],
+    "period": {
+      "start": "2025-10-08"
+    },
+    "purpose": "개인 방송 챌린지 [볼따구로 그려드려요] 작업물입니다.",
+    "purposeEn": "Work from my stream challenge [I'll draw you as Balltagu].",
+    "purposeJa": "個人配信のチャレンジ企画[ボルタグで描いてあげます]の作品です。",
+    "links": [
+      {
+        "label": "댓글 전부 그렸습니다...",
+        "url": "https://youtu.be/sh07e0C4muw?si=AH9-3uGQFIxmXUo4"
+      }
     ]
   },
   {
@@ -173,7 +242,13 @@
         "label": "OGQ 마켓에서 구매하기",
         "url": "https://api.market.ogq.me/da/iv/5b797b9a09f00"
       }
-    ]
+    ],
+    "period": {
+      "start": "2026-06-04"
+    },
+    "purpose": "개인 방송 구독자 캐릭터(볼찌) 이모티콘 작업하였습니다.",
+    "purposeEn": "Created emoticons of my stream's subscriber character, Bolzzi.",
+    "purposeJa": "個人配信の視聴者キャラクター(ボルチ)のスタンプを制作しました。"
   },
   {
     "id": "theme-1",
@@ -188,7 +263,13 @@
       "/portfolio/카톡테마/눈사람-볼따구/2.png",
       "/portfolio/카톡테마/눈사람-볼따구/3.png",
       "/portfolio/카톡테마/눈사람-볼따구/4.png"
-    ]
+    ],
+    "period": {
+      "start": "2026-11-24"
+    },
+    "purpose": "카카오톡 테마 Android/IOS 제작하였습니다.",
+    "purposeEn": "Created a KakaoTalk theme for Android and iOS.",
+    "purposeJa": "Android/iOS向けのカカオトークテーマを制作しました。"
   },
   {
     "id": "game-1",
@@ -277,7 +358,13 @@
         "label": "라인 스티커 구매하기",
         "url": "https://line.me/S/shop/sticker/author/5062500"
       }
-    ]
+    ],
+    "period": {
+      "start": "2024-12-17"
+    },
+    "purpose": "개인용 캐릭터 디자인 및 이모티콘 제작하였습니다.",
+    "purposeEn": "Designed a personal character and created an emoticon set.",
+    "purposeJa": "個人用のキャラクターデザインとスタンプを制作しました。"
   },
   {
     "id": "emo-adult",
